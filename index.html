@@ -655,7 +655,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       <div class="lab">함께 부를 찬양</div>
       <a class="btn btn-ghost btn-song" id="mHymn" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <span class="song-kind">찬송가</span><span class="song-dot">·</span><span class="song-title" id="mHymnTitle"></span></a>
+        <span class="song-title">오늘의 찬양</span></a>
     </div>
     <div class="memo">
       <div class="memo-head">
@@ -683,7 +683,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       <div class="lab">함께 부를 찬양</div>
       <a class="btn btn-ghost btn-song" id="dHymn" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <span class="song-kind">찬송가</span><span class="song-dot">·</span><span class="song-title" id="dHymnTitle"></span></a>
+        <span class="song-title">오늘의 찬양</span></a>
     </div>
     <div class="memo">
       <div class="memo-head">
@@ -1347,9 +1347,12 @@ function chapterUrl(ref){
 function searchUrl(type, title){ return "https://www.youtube.com/results?search_query=" + encodeURIComponent(type + " " + title); }
 /* 곡 링크: 데이터에 지정 URL이 있으면 그 곡으로 바로, 없으면 유튜브 검색으로 */
 function songUrl(c, kind){
+  const isUrl = v => typeof v === 'string' && /^https?:\/\//.test(v.trim());
   const direct = kind === 'hymn' ? c.hymnUrl : c.gospelUrl;
-  if (direct && /^https?:\/\//.test(direct)) return direct;
-  return kind === 'hymn' ? searchUrl("찬송가", c.hymn) : searchUrl("찬양", c.gospel);
+  if (isUrl(direct)) return direct.trim();
+  const title = kind === 'hymn' ? c.hymn : c.gospel;
+  if (isUrl(title)) return title.trim();               // 제목 칸에 링크가 들어온 경우도 직행
+  return kind === 'hymn' ? searchUrl("찬양", title) : searchUrl("찬양", title);
 }
 function periodNow(h){ if(h>=5 && h<11) return 'morning'; if(h>=11 && h<17) return 'midday'; return 'evening'; }
 function esc(s){ return (s||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
@@ -1415,13 +1418,11 @@ function renderContent(){
   document.getElementById('mGuide').innerHTML = paragraphs(c.guide, false);
   document.getElementById('mBible').href = chapterUrl(c.ref);
   document.getElementById('mHymn').href = songUrl(c, 'hymn');
-  document.getElementById('mHymnTitle').textContent = c.hymn || '';
 
   document.getElementById('dRef').textContent = c.ref;
   document.getElementById('dVoice').innerHTML = paragraphs(c.voice, true);
   document.getElementById('dBible').href = chapterUrl(c.ref);
   document.getElementById('dHymn').href = songUrl(c, 'hymn');
-  document.getElementById('dHymnTitle').textContent = c.hymn || '';
 
   renderPrayers(c);
   document.querySelectorAll('.memo textarea').forEach(loadMemo);
