@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0C">
 <title>묵상의 여정 — 누가복음 · 7월</title>
+
+<!-- 아이폰 홈 화면 추가용 -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="묵상의 여정">
+
+<!-- 카톡·SNS 링크 미리보기 (배포 후 아래 두 URL의 사용자명 부분을 실제 주소로 교체) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="묵상의 여정 — 누가복음 · 7월">
+<meta property="og:description" content="아침 · 낮 · 저녁, 하루 세 번 말씀 앞에 서는 묵상의 자리">
+<meta property="og:image" content="https://USERNAME.github.io/REPO/og-image.png">
+<meta property="og:url" content="https://USERNAME.github.io/REPO/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -69,6 +86,107 @@ body { font-family: var(--ui); color: var(--ink); min-height: 100dvh;
 .brand { font-family: var(--display); font-weight: 700; font-size: 1.02rem; color: var(--ink-2); letter-spacing: .02em; }
 .brand small { display:block; font-family: var(--ui); font-weight: 500; font-size: .6rem;
   letter-spacing: .3em; color: var(--muted); margin-top: 3px; }
+.brand small.church { margin: 0 0 4px; color: var(--gold); font-weight: 700; letter-spacing: .34em; font-size: .58rem; }
+
+/* 홈 화면 추가 배너 */
+.install-banner { display: none; align-items: center; gap: 11px; margin: -4px 0 16px;
+  padding: 12px 14px; border: 1px solid var(--gold-20); border-radius: 14px;
+  background: var(--gold-05); font-family: var(--ui); }
+.install-banner.show { display: flex; }
+.install-banner .ib-ic { flex: 0 0 auto; width: 18px; height: 18px; color: var(--gold); }
+.install-banner .ib-txt { flex: 1; font-size: .78rem; color: var(--ink-2); line-height: 1.5; }
+.install-banner .ib-txt b { color: var(--gold); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.install-banner .ib-x { flex: 0 0 auto; border: 0; background: none; color: var(--muted);
+  cursor: pointer; font-size: .95rem; padding: 4px 6px; }
+
+/* 설치 안내 시트 내부 */
+.inst-os { font-family: var(--display); font-weight: 700; font-size: 1.02rem; color: var(--gold); margin: 22px 0 10px; }
+.inst-steps { font-family: var(--ui); font-size: .88rem; color: var(--ink-2); line-height: 2.0; padding-left: 2px; }
+.inst-steps b { color: var(--ink); }
+.inst-warn { margin-top: 24px; padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: 12px;
+  font-size: .78rem; color: var(--muted); line-height: 1.75; background: rgba(255,255,255,.015); }
+.inst-warn b { color: #C98A6B; }
+.inst-native { width: 100%; margin: 6px 0 2px; padding: 15px; border-radius: 14px; border: 1px solid var(--gold);
+  background: var(--gold-12); color: var(--gold); font-family: var(--ui); font-weight: 700; font-size: .94rem;
+  cursor: pointer; display: none; }
+.inst-native.show { display: block; }
+
+/* 사용 안내 아코디언 */
+.acc-item { border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  background: rgba(255,255,255,.015); margin-bottom: 10px; }
+.acc-head { width: 100%; display: flex; align-items: center; gap: 12px; padding: 16px;
+  background: none; border: 0; cursor: pointer; font-family: var(--ui);
+  color: var(--ink); font-size: .9rem; font-weight: 700; text-align: left; }
+.acc-ic { width: 22px; text-align: center; flex: 0 0 22px; }
+.acc-ch { margin-left: auto; color: var(--muted); font-size: 1.1rem; line-height: 1;
+  transition: transform .3s var(--ease), color .3s; }
+.acc-item.open .acc-ch { transform: rotate(90deg); color: var(--gold); }
+.acc-body { display: none; padding: 0 16px 18px 50px; font-family: var(--ui);
+  font-size: .84rem; color: var(--ink-2); line-height: 1.9; word-break: keep-all; }
+.acc-item.open .acc-body { display: block; animation: accIn .35s var(--ease); }
+@keyframes accIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; } }
+.acc-body b { color: var(--gold); font-weight: 700; }
+.acc-body .inst-steps { padding-left: 0; }
+.acc-body .inst-os { margin: 16px 0 6px; font-size: .92rem; }
+.acc-body .inst-warn { margin-top: 16px; }
+
+/* 집중 보기: 좌우 이동 + 말씀 카드 공유 */
+.focus-nav { display: flex; gap: 12px; justify-content: center; align-items: center; margin-top: 30px; }
+.fnav { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,.02); color: var(--ink-2); font-size: 1.35rem; line-height: 1;
+  cursor: pointer; transition: color .25s, border-color .25s, transform .18s var(--spring); }
+.fnav:hover { color: var(--gold); border-color: var(--gold-20); }
+.fnav:active { transform: scale(.9); }
+.fshare { display: inline-flex; align-items: center; gap: 9px; padding: 14px 20px;
+  border-radius: 14px; border: 1px solid var(--gold-20); background: var(--gold-05);
+  color: var(--gold); font-family: var(--ui); font-weight: 700; font-size: .86rem; cursor: pointer;
+  transition: background .3s, transform .18s var(--spring); }
+.fshare:hover { background: var(--gold-12); }
+.fshare:active { transform: scale(.96); }
+.fshare svg { width: 16px; height: 16px; stroke-width: 1.8; }
+
+/* ── 집중 보기 (길게 눌러 전체 화면) ── */
+.lp { -webkit-touch-callout: none; }
+.focus { position: fixed; inset: 0; z-index: 110; display: none; flex-direction: column; }
+.focus.open { display: flex; }
+.focus-bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(90% 55% at 50% 0%, rgba(212,175,55,.10), transparent 65%),
+    rgba(7,7,9,.985);
+  opacity: 0; transition: opacity .4s var(--ease); }
+.focus.open .focus-bg { opacity: 1; }
+.focus-close { position: absolute; top: max(16px, env(safe-area-inset-top)); right: 18px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,.03); color: var(--ink-2); font-size: 1.05rem; cursor: pointer;
+  transition: color .25s, border-color .25s, transform .18s var(--spring); }
+.focus-close:hover { color: var(--gold); border-color: var(--gold-20); }
+.focus-close:active { transform: scale(.92); }
+.focus-inner { position: relative; z-index: 1; flex: 1; overflow-y: auto; overscroll-behavior: contain;
+  padding: max(72px, calc(env(safe-area-inset-top) + 56px)) 26px calc(60px + env(safe-area-inset-bottom));
+  max-width: 620px; margin: 0 auto; width: 100%;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .5s var(--ease) .1s, transform .55s var(--ease) .1s; }
+.focus.open .focus-inner { opacity: 1; transform: none; }
+.focus-kicker { text-align: center; font-family: var(--ui); font-size: .68rem; font-weight: 700;
+  letter-spacing: .34em; color: var(--gold); margin-bottom: 26px; }
+/* 구절 모드 */
+.focus.verse .focus-inner { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+.focus-verse-date { font-family: var(--ui); font-size: .76rem; letter-spacing: .22em; color: var(--muted); margin-bottom: 22px; }
+.focus-verse-ref { font-family: var(--display); font-weight: 700;
+  font-size: clamp(2.2rem, 10vw, 3.2rem); color: var(--ink); line-height: 1.35; margin-bottom: 30px; }
+.focus .rule { margin-bottom: 34px; }
+.focus-verse-btn { margin: 0 auto; }
+/* 읽기 모드 */
+.focus-read-title { text-align: center; font-family: var(--display); font-weight: 700;
+  font-size: 1.3rem; color: var(--ink); margin-bottom: 34px; }
+.focus-body { font-family: var(--read); font-weight: 300; font-size: 1.28rem; line-height: 2.15;
+  color: var(--ink-2); word-break: keep-all; }
+body[data-font="3"] .focus-body { font-size: 1.4rem; }
+body[data-font="1"] .focus-body { font-size: 1.16rem; }
+.focus-body p { margin-bottom: 1.15em; }
+.focus-body p.turn { color: var(--ink); border-left: 2px solid var(--gold-20); padding-left: 18px; }
+.focus-hint { text-align: center; margin-top: 40px; font-family: var(--ui); font-size: .68rem;
+  letter-spacing: .1em; color: var(--muted); }
 .topbtns { display: flex; gap: 8px; }
 .iconbtn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line);
   background: rgba(255,255,255,.02); color: var(--ink-2); cursor: pointer;
@@ -225,7 +343,13 @@ body[data-font="3"] .reading { font-size: 1.26rem; line-height: 2.05; }
   color: var(--gold); background: var(--gold-05); border: 1px solid var(--gold-20); }
 .btn-primary:hover { background: var(--gold-12); border-color: var(--gold); transform: translateY(-2px); }
 .srccap { text-align:center; font-size:.68rem; color: var(--muted); letter-spacing:.05em; margin-top: 9px; }
-.listen { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+.listen { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 22px; }
+.btn-song { padding: 15px 18px; max-width: 360px; width: 100%; margin: 0 auto; }
+.btn-song .song-kind { color: var(--muted); font-weight: 500; font-size: .8rem; letter-spacing: .06em; }
+.btn-song .song-dot { color: var(--muted); opacity: .6; }
+.btn-song .song-title { font-family: var(--display); font-weight: 700; font-size: .95rem; color: var(--ink-2);
+  transition: color .3s; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn-song:hover .song-title { color: var(--gold); }
 .btn-ghost { padding: 13px 12px; border-radius: 14px; font-weight: 500; font-size: .86rem;
   color: var(--ink-2); background: rgba(255,255,255,.025); border: 1px solid var(--line); }
 .btn-ghost:hover { color: var(--gold); border-color: var(--gold-20); background: var(--gold-05); transform: translateY(-2px); }
@@ -458,8 +582,11 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
 
 <div class="wrap" id="wrap">
   <header class="top">
-    <div class="brand">묵상의 여정<small>LUKE · JULY 2026</small></div>
+    <div class="brand"><small class="church">한세교회</small>묵상의 여정<small id="brandSub">묵상의 자리</small></div>
     <div class="topbtns">
+      <button class="iconbtn" id="installBtn" title="사용 안내" aria-label="사용 안내 열기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9.5"/><path d="M9.4 9.2a2.7 2.7 0 0 1 5.2 1c0 1.8-2.6 2.2-2.6 3.8"/><circle cx="12" cy="17.3" r="0.6" fill="currentColor"/></svg>
+      </button>
       <button class="iconbtn" id="fontBtn" title="글자 크기" aria-label="글자 크기 조절">가<span class="sup">A</span></button>
       <button class="iconbtn" id="journeyBtn" title="나의 여정" aria-label="나의 여정 열기">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 9.5h18"/></svg>
@@ -477,6 +604,12 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       </div>
     </div>
     <button class="dn-arrow" id="nextDay" aria-label="다음 날">›</button>
+  </div>
+
+  <div class="install-banner" id="installBanner">
+    <svg class="ib-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8v6m0 0l-2.5-2.5M12 14l2.5-2.5"/></svg>
+    <div class="ib-txt">홈 화면에 추가하면 앱처럼 바로 열 수 있어요. <b id="ibHow">방법 보기</b></div>
+    <button class="ib-x" id="ibClose" aria-label="배너 닫기">✕</button>
   </div>
 
   <nav class="skynav" id="sesnav" aria-label="묵상 시간 선택">
@@ -507,7 +640,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       <div class="passage-ref" id="mRef"></div>
       <div class="sep"></div>
     </div>
-    <div class="hero">
+    <div class="hero lp" data-lp="verse">
       <span class="mark">&#8220;</span>
       <div class="kicker">오늘의 한 구절</div>
       <div class="verse-ref" id="mVRef"></div>
@@ -517,13 +650,12 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       새한글성경 본문 보기</a>
     <div class="srccap">ⓒ 대한성서공회</div>
-    <div class="card" style="margin-top:24px"><div class="reading" id="mGuide"></div></div>
+    <div class="card lp" data-lp="guide" style="margin-top:24px"><div class="reading" id="mGuide"></div></div>
     <div class="listen">
       <div class="lab">함께 부를 찬양</div>
-      <a class="btn btn-ghost" id="mHymn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> 찬송가</a>
-      <a class="btn btn-ghost" id="mGospel" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v10.5"/><circle cx="9" cy="16" r="3"/><path d="M12 3l7 2v9.5"/><circle cx="16" cy="17" r="3"/></svg> 복음송</a>
+      <a class="btn btn-ghost btn-song" id="mHymn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span class="song-title">오늘의 찬양</span></a>
     </div>
     <div class="memo">
       <div class="memo-head">
@@ -546,13 +678,12 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       새한글성경 본문 보기</a>
     <div class="srccap">ⓒ 대한성서공회</div>
-    <div class="card" style="margin-top:24px"><div class="reading deep" id="dVoice"></div></div>
+    <div class="card lp" data-lp="voice" style="margin-top:24px"><div class="reading deep" id="dVoice"></div></div>
     <div class="listen">
       <div class="lab">함께 부를 찬양</div>
-      <a class="btn btn-ghost" id="dHymn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> 찬송가</a>
-      <a class="btn btn-ghost" id="dGospel" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v10.5"/><circle cx="9" cy="16" r="3"/><path d="M12 3l7 2v9.5"/><circle cx="16" cy="17" r="3"/></svg> 복음송</a>
+      <a class="btn btn-ghost btn-song" id="dHymn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span class="song-title">오늘의 찬양</span></a>
     </div>
     <div class="memo">
       <div class="memo-head">
@@ -585,13 +716,13 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
     </div>
   </section>
 
-  <!-- 주일 -->
+  <!-- 주일 / 쉬는 날 -->
   <section id="sunday" class="sess">
-    <div class="eyebrow" style="margin-top:34px">Lord&rsquo;s Day</div>
+    <div class="eyebrow" style="margin-top:34px" id="restEyebrow">Lord&rsquo;s Day</div>
     <div class="card sun-card" style="margin-top:18px">
       <div class="sun-mark">✦</div>
-      <h2>주일, 예배의 날</h2>
-      <p>오늘은 개인 묵상 대신<br>함께 모여 예배로 하나님을 만나는 날입니다.<br><br>한 주간 받은 은혜를 마음에 품고<br>기쁨으로 예배의 자리로 나아가십시오.</p>
+      <h2 id="restTitle">주일, 예배의 날</h2>
+      <p id="restBody">오늘은 개인 묵상 대신<br>함께 모여 예배로 하나님을 만나는 날입니다.<br><br>한 주간 받은 은혜를 마음에 품고<br>기쁨으로 예배의 자리로 나아가십시오.</p>
     </div>
   </section>
 </div>
@@ -602,7 +733,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
   <div class="sheet-panel" role="dialog" aria-label="나의 여정">
     <div class="grab"></div>
     <div class="sheet-title"><h2>나의 여정</h2><button id="sheetClose">닫기 ✕</button></div>
-    <div class="sheet-sub">누가복음 · 2026년 7월</div>
+    <div class="sheet-sub" id="sheetSub"></div>
     <div class="stats">
       <div class="stat"><b id="stDays">0</b><span>묵상한 날</span></div>
       <div class="stat"><b id="stMemos">0</b><span>남긴 기록</span></div>
@@ -660,6 +791,101 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
   </div>
 </div>
 
+<!-- 사용 안내 시트 -->
+<div class="sheet" id="instSheet" aria-hidden="true">
+  <div class="sheet-bg" id="instBg"></div>
+  <div class="sheet-panel" role="dialog" aria-label="사용 안내">
+    <div class="grab"></div>
+    <div class="sheet-title"><h2>사용 안내</h2><button id="instClose">닫기 ✕</button></div>
+    <div class="sheet-sub">항목을 누르면 자세한 설명이 열립니다</div>
+    <div id="accWrap">
+
+      <div class="acc-item" data-acc="install">
+        <button class="acc-head"><span class="acc-ic">📲</span>홈 화면에 추가하기<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          홈 화면에 추가하면 매번 링크를 찾지 않고 <b>앱처럼 바로</b> 열 수 있습니다.
+          <button class="inst-native" id="instNative">지금 바로 설치하기</button>
+          <div class="inst-os">🍎 아이폰 (iPhone)</div>
+          <div class="inst-steps">
+            ① <b>사파리(Safari)</b>로 이 페이지를 여세요<br>
+            ② 하단 <b>공유 버튼</b>(□ 위에 ↑)을 누르세요<br>
+            ③ 아래로 내려 <b>"홈 화면에 추가"</b>를 선택하세요<br>
+            ④ 오른쪽 상단 <b>추가</b>를 누르면 완료!
+          </div>
+          <div class="inst-os">🤖 안드로이드 (갤럭시 등)</div>
+          <div class="inst-steps">
+            ① <b>크롬(Chrome)</b>으로 이 페이지를 여세요<br>
+            ② 오른쪽 상단 <b>⋮</b>(점 세 개) 메뉴를 누르세요<br>
+            ③ <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 선택하세요<br>
+            ④ <b>추가</b>를 누르면 완료!
+          </div>
+          <div class="inst-warn"><b>※ 카카오톡 안에서 열었다면</b> 설치가 되지 않습니다.<br>
+            메뉴에서 <b style="color:var(--ink-2)">"다른 브라우저로 열기"</b>를 누른 뒤 진행해 주세요.</div>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="sessions">
+        <button class="acc-head"><span class="acc-ic">☀️</span>아침 · 낮 · 저녁, 세 번의 묵상<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          하루를 <b>세 번의 만남</b>으로 보냅니다. 지평선 위 <b>아침·낮·저녁</b>을 누르면 해가 궤도를 따라 이동하고, 저녁에는 달로 바뀝니다. 화면을 <b>좌우로 쓸어 넘겨도</b> 전환됩니다. 지금 시간대에는 이름 옆에 금빛 점이 깜빡입니다.<br><br>
+          <b>아침</b> — 오늘의 한 구절과 여는 묵상으로 하루를 엽니다.<br>
+          <b>낮</b> — 본문 전체를 깊이 묵상합니다.<br>
+          <b>저녁</b> — 세 가지 기도 제목으로 하루를 닫습니다.
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="focus">
+        <button class="acc-head"><span class="acc-ic">🔍</span>길게 눌러 집중 보기 · 말씀 카드<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          <b>"오늘의 한 구절"이나 묵상 글을 1초 정도 지그시 누르면</b> 다른 모든 것이 사라지고 그 내용만 화면 가득 크게 표시됩니다.<br><br>
+          구절 화면에서는 <b>‹ ›</b> 버튼으로 어제·내일의 구절로 넘겨볼 수 있고, <b>말씀 카드 공유</b>를 누르면 오늘의 구절이 담긴 이미지 카드를 만들어 카카오톡 등으로 보내거나 저장할 수 있습니다.<br><br>
+          글자가 작게 느껴지면 상단의 <b>가ᴬ</b> 버튼으로 3단계 크기를 조절하세요. 설정은 기억됩니다.
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="dates">
+        <button class="acc-head"><span class="acc-ic">📅</span>날짜 이동과 나의 여정<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          날짜 양옆의 <b>‹ ›</b>로 지난 묵상을 다시 보거나 놓친 날을 따라잡을 수 있습니다. 다른 날짜에 있을 땐 <b>오늘</b> 버튼으로 바로 돌아옵니다.<br><br>
+          상단의 <b>달력 아이콘</b>을 누르면 <b>나의 여정</b>이 열립니다 — 이번 달 통계, 날짜별 완료 현황 달력, 그동안 남긴 기록 모음을 볼 수 있고, 달력의 날짜나 기록을 누르면 그 자리로 이동합니다. 매달 1일이 되면 새로운 달의 묵상이 자동으로 열립니다.
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="privacy">
+        <button class="acc-head"><span class="acc-ic">✍️</span>기록은 어디에 저장되나요<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          아침·낮·저녁의 기록은 쓰는 동안 <b>자동 저장</b>되고 저장 시각이 표시됩니다.<br><br>
+          모든 기록은 <b>오직 지금 이 기기(브라우저) 안에만</b> 저장됩니다. 서버로 전송되지 않으며, <b>목사님을 포함해 그 누구도 볼 수 없습니다.</b> 안심하고 솔직한 마음을 적으세요.
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="pray">
+        <button class="acc-head"><span class="acc-ic">🙏</span>기도 체크와 하루 완주<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          저녁의 기도 제목을 누르면 금빛 체크가 켜집니다. 날짜 아래 <b>점 세 개</b>는 아침·낮·저녁의 완료 표시입니다 — 기록을 남기면 켜지고, 저녁은 기도를 모두 드려도 켜집니다.<br><br>
+          하루 세 번을 모두 마치는 순간, 단 한 번의 <b>완주 축하</b>가 조용히 찾아옵니다.
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="backup">
+        <button class="acc-head"><span class="acc-ic">💾</span>백업과 복원<span class="acc-ch">›</span></button>
+        <div class="acc-body">
+          기록은 이 기기에만 있으므로, 폰을 바꾸거나 브라우저 데이터를 정리하면 사라질 수 있습니다.<br><br>
+          <b>나의 여정 → 내보내기</b>로 한 달에 한 번 기록을 파일로 저장해 두세요. 새 기기에서 <b>불러오기</b>로 그 파일을 선택하면 기록이 그대로 되살아납니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 집중 보기 (길게 눌러 전체 화면) -->
+<div class="focus" id="focus" role="dialog" aria-label="집중 보기">
+  <div class="focus-bg"></div>
+  <button class="focus-close" id="focusClose" aria-label="닫기">✕</button>
+  <div class="focus-inner" id="focusInner"></div>
+</div>
+
 <script>
 const DEFAULT_PLAN = [
   {
@@ -674,7 +900,8 @@ const DEFAULT_PLAN = [
       "제 목적을 위해 말씀을 타협하지 않고, 어디서든 진리를 담대히 붙들게 하소서."
     ],
     "guide": "\"내 집은 기도하는 집이 될 것이다 하였다. 그런데 너희는 그것을 강도들의 소굴로 만들어 버렸다.\"(눅 19:46)\n\n성전에서 상을 엎으시며 하신 이 한마디는, 성전이 무엇을 위해 있는지를 다시 못 박으십니다. 성전은 하나님과 만나 기도하고 교제하며 용서받는 자리였습니다. 그런데 사람들은 그 거룩한 자리를 자기 잇속을 챙기는 장터로 바꿔 놓았습니다.\n\n오늘 이 한 절 앞에 잠시 머물러 보십시오. 지금 내 마음의 성전은 '기도하는 집'에 가깝습니까, '강도의 소굴'에 가깝습니까? 오늘 하루, 내 안의 어떤 자리를 다시 비워 주님께 기도의 자리로 내어드리고 싶으신가요?",
-    "voice": "주님은 평화의 왕으로 오셨는데도 자신을 알아보지 못하는 예루살렘을 보며 통곡하시는 분입니다. 심판을 선포하시기 전에 먼저 우시는 분, 기도의 기능을 잃어버린 성전을 보시고 그것을 회복시키려 상을 엎으시는 분입니다. 또 종교 지도자들의 권세 시비 앞에서도 흔들림 없이 하나님의 권세로 담대히 가르치시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 평화의 복음을 아직도 거절하는 이웃을 보며 주님처럼 안타까워하며 울어 본 적이 있습니까. 내 삶과 우리 교회는 참된 기도가 살아 있는 집입니까, 아니면 어느새 둔감해진 자리입니까. 그리고 나는 진리를 담대히 말하기보다 내 목적을 위해 상황 따라 말을 바꾸고 있지는 않습니까. 오늘 주님의 눈물이 머무는 자리를 함께 바라봅시다."
+    "voice": "주님은 평화의 왕으로 오셨는데도 자신을 알아보지 못하는 예루살렘을 보며 통곡하시는 분입니다. 심판을 선포하시기 전에 먼저 우시는 분, 기도의 기능을 잃어버린 성전을 보시고 그것을 회복시키려 상을 엎으시는 분입니다. 또 종교 지도자들의 권세 시비 앞에서도 흔들림 없이 하나님의 권세로 담대히 가르치시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 평화의 복음을 아직도 거절하는 이웃을 보며 주님처럼 안타까워하며 울어 본 적이 있습니까. 내 삶과 우리 교회는 참된 기도가 살아 있는 집입니까, 아니면 어느새 둔감해진 자리입니까. 그리고 나는 진리를 담대히 말하기보다 내 목적을 위해 상황 따라 말을 바꾸고 있지는 않습니까. 오늘 주님의 눈물이 머무는 자리를 함께 바라봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=XCBuqVxNwJE"
   },
   {
     "date": "2026-07-02",
@@ -702,7 +929,8 @@ const DEFAULT_PLAN = [
       "저를 넘어뜨리려는 어떤 음모도 미리 아시고 파하시는 주님을 신뢰하게 하소서."
     ],
     "guide": "\"그러면 황제의 것은 황제에게 돌려주고, 하나님의 것은 하나님께 돌려드려라.\"(눅 20:25)\n\n세금 문제로 예수님을 함정에 빠뜨리려던 자들에게, 주님은 데나리온에 새겨진 형상을 보여 주십니다. 황제의 형상이 새겨진 돈은 황제에게 돌리라고 하시면서, 더 중요한 질문을 남기십니다. 그렇다면 하나님의 형상이 새겨진 나는, 누구에게 돌려드려야 하겠습니까.\n\n오늘 이 한 절 앞에 머물러 보십시오. 내 삶에는 '하나님의 형상'이 찍혀 있습니다. 오늘 하루, 그 형상의 주인이신 하나님께 나를 온전히 돌려드리는 자리는 어디입니까?",
-    "voice": "하나님은 원수의 교활한 속셈까지 훤히 아시는 분입니다. 예수님은 함정에 빠뜨리려는 질문을 지혜롭게 꿰뚫으시고, 도리어 그들의 입을 다물게 하셨습니다. 지금도 사탄이 음모를 꾸며 하나님의 일을 방해하려 해도, 그 모든 계획을 미리 아시고 파하시는 주님이 우리와 함께하십니다.\n\n그렇다면 나는 어떻습니까. 나는 하나님의 형상대로 지음받은 사람으로서, 그 형상의 주인이신 하나님의 다스림에 헌신하며 살고 있습니까. 어려운 문제를 만났을 때 나는 어디에서 답을 찾습니까. 세상의 계산과 눈치입니까, 아니면 모든 공격 앞에서도 흔들리지 않는 하나님 말씀의 권위입니까. 오늘 하루 그 답을 주님께 구합시다."
+    "voice": "하나님은 원수의 교활한 속셈까지 훤히 아시는 분입니다. 예수님은 함정에 빠뜨리려는 질문을 지혜롭게 꿰뚫으시고, 도리어 그들의 입을 다물게 하셨습니다. 지금도 사탄이 음모를 꾸며 하나님의 일을 방해하려 해도, 그 모든 계획을 미리 아시고 파하시는 주님이 우리와 함께하십니다.\n\n그렇다면 나는 어떻습니까. 나는 하나님의 형상대로 지음받은 사람으로서, 그 형상의 주인이신 하나님의 다스림에 헌신하며 살고 있습니까. 어려운 문제를 만났을 때 나는 어디에서 답을 찾습니까. 세상의 계산과 눈치입니까, 아니면 모든 공격 앞에서도 흔들리지 않는 하나님 말씀의 권위입니까. 오늘 하루 그 답을 주님께 구합시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=Slbo9PR4fZ8"
   },
   {
     "date": "2026-07-04",
@@ -730,7 +958,8 @@ const DEFAULT_PLAN = [
       "흐려진 제 삶의 목적과 소명을 다시 붙잡아 오직 주님을 갈망하게 하소서."
     ],
     "guide": "\"내가 진정으로 너희에게 말한다. 이 가난한 과부가 누구보다도 더 많이 넣었다.\"(눅 21:3)\n\n부자들이 넣는 큰 헌금 곁에서, 예수님의 시선은 렙돈 두 닢을 넣는 가난한 과부에게 머뭅니다. 주님은 헌금의 '액수'가 아니라 마음의 '태도'를 보셨습니다. 과부는 넉넉함에서 얼마를 떼어 낸 것이 아니라, 가진 생활비 전부를 털어 넣었기 때문입니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 주님은 지금도 내 마음의 중심을 보십니다. 오늘 내가 주님께 드리는 것은 '남는 것'입니까, 아니면 '전부'입니까? 오늘 하루, 주님 앞에 온전히 털어 드리고 싶은 나의 무엇이 있습니까?",
-    "voice": "하나님은 다윗의 자손일 뿐 아니라 다윗이 '주'라 고백할 만큼 위대하고 절대적인 분입니다. 지금도 하나님 우편에서 성령을 부어 주시고, 회개와 죄 사함과 구원을 얻게 하시는 왕이십니다. 또 사람에게 보이려는 외식을 미워하시고, 사람들의 시선이 향하지 않는 가난한 과부의 전적인 헌신을 눈여겨보시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 서기관들처럼 사람들 눈에 띄기를 원하고, 신앙과 경건을 이름과 지위를 얻는 도구로 삼고 있지는 않습니까. 내 삶의 목적과 소명이 흐려져 어느새 사람의 인정을 좇고 있지는 않습니까. 아니면 아무도 알아주지 않아도 가진 것을 다 털어 드리는 과부의 마음을 품고 있습니까. 오늘 주님의 시선이 머무는 자리를 함께 바라봅시다."
+    "voice": "하나님은 다윗의 자손일 뿐 아니라 다윗이 '주'라 고백할 만큼 위대하고 절대적인 분입니다. 지금도 하나님 우편에서 성령을 부어 주시고, 회개와 죄 사함과 구원을 얻게 하시는 왕이십니다. 또 사람에게 보이려는 외식을 미워하시고, 사람들의 시선이 향하지 않는 가난한 과부의 전적인 헌신을 눈여겨보시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 서기관들처럼 사람들 눈에 띄기를 원하고, 신앙과 경건을 이름과 지위를 얻는 도구로 삼고 있지는 않습니까. 내 삶의 목적과 소명이 흐려져 어느새 사람의 인정을 좇고 있지는 않습니까. 아니면 아무도 알아주지 않아도 가진 것을 다 털어 드리는 과부의 마음을 품고 있습니까. 오늘 주님의 시선이 머무는 자리를 함께 바라봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=P2taHyelVJM"
   },
   {
     "date": "2026-07-07",
@@ -772,7 +1001,8 @@ const DEFAULT_PLAN = [
       "이 시대의 징조를 분별하며, 다시 오실 주님을 준비하는 하루가 되게 하소서."
     ],
     "guide": "\"너희는 앞으로 일어날 이 모든 일을 능히 피하고, 또 인자 앞에 설 수 있도록, 기도하면서 늘 깨어 있어라.\"(눅 21:36)\n\n무화과나무의 비유로 종말을 준비시키신 예수님은, 그 준비를 딱 한 단어로 요약하십니다. 바로 '깨어 기도함'입니다. 그 날이 덫처럼 갑자기 덮치지 않도록, 방탕과 염려로 마음이 둔해지지 않도록, 늘 깨어 기도하라 하십니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 지금 내 마음을 무겁게 하고 둔하게 하는 세상의 염려는 무엇입니까? 오늘 하루, 그 무거움을 내려놓고 깨어 기도하는 시간을 어디에 두시겠습니까?",
-    "voice": "하나님은 하늘과 땅은 사라질지라도 하신 말씀은 반드시 이루시는 분입니다. 죄와 불의가 판치는 이 혼란한 세상도 제멋대로 나아가는 것이 아니라, 주님의 다스림 아래 종말을 향해 나아가고 있습니다. 또 종교 지도자들의 반대와 백성들의 거절에도 불구하고, 날마다 성전에서 백성을 가르치시는 데 열심을 내시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 방탕과 술취함과 생활의 염려로 마음이 짓눌려, 영적으로 둔해지고 있지는 않습니까. 마음이 세상의 것으로 무거우면 그만큼 주님의 재림에 대해서도 어두워집니다. 또 이른 아침부터 말씀을 들으려 성전에 모여든 백성들처럼, 나는 주의 말씀을 사모하고 있습니까. 나에게는 이 시대의 징조를 영적으로 분별할 분별력이 있습니까. 오늘도 깨어 말씀으로 마음을 채웁시다."
+    "voice": "하나님은 하늘과 땅은 사라질지라도 하신 말씀은 반드시 이루시는 분입니다. 죄와 불의가 판치는 이 혼란한 세상도 제멋대로 나아가는 것이 아니라, 주님의 다스림 아래 종말을 향해 나아가고 있습니다. 또 종교 지도자들의 반대와 백성들의 거절에도 불구하고, 날마다 성전에서 백성을 가르치시는 데 열심을 내시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 방탕과 술취함과 생활의 염려로 마음이 짓눌려, 영적으로 둔해지고 있지는 않습니까. 마음이 세상의 것으로 무거우면 그만큼 주님의 재림에 대해서도 어두워집니다. 또 이른 아침부터 말씀을 들으려 성전에 모여든 백성들처럼, 나는 주의 말씀을 사모하고 있습니까. 나에게는 이 시대의 징조를 영적으로 분별할 분별력이 있습니까. 오늘도 깨어 말씀으로 마음을 채웁시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=3LWjFVTjiMA"
   },
   {
     "date": "2026-07-10",
@@ -786,7 +1016,8 @@ const DEFAULT_PLAN = [
       "돈과 야망에 눈이 어두워지지 않도록, 사탄에게 틈을 열어 주지 않게 하소서."
     ],
     "guide": "\"선생님께서 당신에게 말씀하시기를, 내가 내 제자들과 함께 유월절 음식을 먹을 그 방이 어디에 있느냐고 하십니다.\"(눅 22:11)\n\n예수님을 죽이려는 음모가 무르익던 그 시간에, 주님은 제자들과 나눌 마지막 유월절 식사를 치밀하게 준비시키십니다. 물동이를 멘 사람을 만나고 그 집으로 따라가라는 말씀은, 제자들이 가서 보니 그대로였습니다. 죽음의 그늘 아래서도 주님은 한 걸음 한 걸음 그분의 계획을 성취해 가십니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 주님은 지금도 내 삶의 세세한 부분까지 앞서 준비하시는 분입니다. 오늘 하루, 나는 주님의 말씀을 따라 한 걸음만 순종하며 나아가겠습니까? 그 순종의 자리는 어디입니까?",
-    "voice": "하나님은 제자들에게 유월절 식사를 준비시키시며, 자신의 명령이 그대로 성취되는 것을 통해 신적인 권위를 드러내시는 분입니다. 제자들과 함께 가족의 식탁을 나누심으로 그들을 한 가족으로 만드시고, 유월절 어린양처럼 십자가 위에서 자기 백성을 죄에서 구원하시려 피 흘려 죽으실 것을 미리 보여 주시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 내 모든 죄를 구속하시고 하나님의 가족으로 불러 주신 그 은혜를, 우리의 모임과 예배 속에서 얼마나 경축하고 있습니까. 우리의 공동체가 단순한 만남이 아니라, 십자가에서 피 흘려 죽으신 예수님을 함께 나누는 유월절 공동체임을 기억하고 있습니까. 반면 돈과 야망에 눈이 어두워 신앙을 쉽게 내려놓은 가룟 유다처럼, 나는 사탄에게 틈을 열어 주고 있지는 않습니까. 오늘 그 경계를 늦추지 맙시다."
+    "voice": "하나님은 제자들에게 유월절 식사를 준비시키시며, 자신의 명령이 그대로 성취되는 것을 통해 신적인 권위를 드러내시는 분입니다. 제자들과 함께 가족의 식탁을 나누심으로 그들을 한 가족으로 만드시고, 유월절 어린양처럼 십자가 위에서 자기 백성을 죄에서 구원하시려 피 흘려 죽으실 것을 미리 보여 주시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 내 모든 죄를 구속하시고 하나님의 가족으로 불러 주신 그 은혜를, 우리의 모임과 예배 속에서 얼마나 경축하고 있습니까. 우리의 공동체가 단순한 만남이 아니라, 십자가에서 피 흘려 죽으신 예수님을 함께 나누는 유월절 공동체임을 기억하고 있습니까. 반면 돈과 야망에 눈이 어두워 신앙을 쉽게 내려놓은 가룟 유다처럼, 나는 사탄에게 틈을 열어 주고 있지는 않습니까. 오늘 그 경계를 늦추지 맙시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=3K-bA_rj3Vw"
   },
   {
     "date": "2026-07-11",
@@ -814,7 +1045,8 @@ const DEFAULT_PLAN = [
       "지금도 저를 위해 기도하시는 주님을 의지하여, 넘어져도 다시 일어나게 하소서."
     ],
     "guide": "\"너희 가운데서 가장 큰 사람은 가장 어린 사람과 같이 되어야 하고, 다스리는 사람은 섬기는 사람과 같이 되어야 한다.\"(눅 22:26)\n\n성찬의 자리에서조차 \"누가 크냐\" 다투는 제자들에게, 예수님은 하나님 나라의 뒤집힌 질서를 가르치십니다. 세상은 위에 군림하는 자를 크다 하지만, 하나님 나라에서 큰 사람은 가장 낮은 자리에서 섬기는 사람입니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 나는 내가 속한 자리에서 대접받기를 원합니까, 섬기기를 원합니까? 오늘 하루, 내가 한 사람을 가장 낮은 자리에서 섬길 수 있는 자리는 어디입니까?",
-    "voice": "하나님은 섬기는 자로 제자들 가운데 계시는 분입니다. 세상 지도자들은 자기 욕망을 채우려 사람 위에 군림하면서도 존경받기를 원하지만, 예수님은 자기를 따르는 자들을 섬기기 위해 십자가를 지고 죽으실 분입니다. 또 넘어질 베드로의 믿음이 꺾이지 않도록 미리 기도하시고, 지금도 아버지 우편에서 나의 믿음과 사역의 회복을 위해 기도하고 계시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 공동체의 일꾼으로서 섬기기보다 지배하기를 더 좋아하고 있지는 않습니까. 주님의 고난에는 동참하지 않으면서 영광만 받으려 하지는 않습니까. 섬김의 태도 없이는 새 언약의 공동체가 든든히 설 수 없습니다. 주님을 따르기에 불명예스러워지는 것까지 나는 감당할 수 있습니까. 오늘 낮은 자리에서 섬기는 자로 서 봅시다."
+    "voice": "하나님은 섬기는 자로 제자들 가운데 계시는 분입니다. 세상 지도자들은 자기 욕망을 채우려 사람 위에 군림하면서도 존경받기를 원하지만, 예수님은 자기를 따르는 자들을 섬기기 위해 십자가를 지고 죽으실 분입니다. 또 넘어질 베드로의 믿음이 꺾이지 않도록 미리 기도하시고, 지금도 아버지 우편에서 나의 믿음과 사역의 회복을 위해 기도하고 계시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 공동체의 일꾼으로서 섬기기보다 지배하기를 더 좋아하고 있지는 않습니까. 주님의 고난에는 동참하지 않으면서 영광만 받으려 하지는 않습니까. 섬김의 태도 없이는 새 언약의 공동체가 든든히 설 수 없습니다. 주님을 따르기에 불명예스러워지는 것까지 나는 감당할 수 있습니까. 오늘 낮은 자리에서 섬기는 자로 서 봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=jQleABEXOdU"
   },
   {
     "date": "2026-07-14",
@@ -828,7 +1060,8 @@ const DEFAULT_PLAN = [
       "저를 구원하신 아버지의 사랑과 예수님의 은혜에, 온 마음으로 감사하게 하소서."
     ],
     "guide": "\"아버지, 만일 아버지의 뜻이면, 내게서 이 잔을 거두어 주십시오. 그러나 내 뜻대로 되게 하지 마시고, 아버지의 뜻대로 되게 하여 주십시오.\"(눅 22:42)\n\n감람산에서 드리신 이 기도는, 십자가 앞에서 예수님이 치르신 격렬한 영적 싸움을 보여 줍니다. 인류의 죄를 짊어지고 아버지와 분리되는 고통은 땀이 핏방울처럼 떨어질 만큼 힘겨웠습니다. 그러나 주님은 자기 뜻을 아버지의 뜻에 온전히 복종시키심으로 승리하셨습니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 지금 내게 있는 '거두어 주십시오' 하고 싶은 잔은 무엇입니까? 오늘 하루, 그 자리에서 \"내 뜻대로 마시고, 아버지의 뜻대로\" 라고 기도할 수 있겠습니까?",
-    "voice": "하나님은 늘 하시던 대로 기도하시며, 기도로 아버지의 뜻에 자신을 맞추시는 분입니다. 위기의 순간에 흔들리지 않은 것은, 평소 기도하는 습관이 몸에 배어 있었기 때문입니다. 격렬한 고통의 기도 가운데서도 자신을 철저히 복종시키셨고, 하나님은 천사를 보내 그 힘겨운 싸움을 붙들어 주셨습니다.\n\n그렇다면 나는 어떻습니까. 나는 예수님을 따라 그 자리까지 가긴 하면서도, 기도하는 습관까지는 따르지 못하고 있지는 않습니까. 나의 구원은 나를 구원하시려는 아버지의 사랑과, 자기 뜻을 복종시키신 예수님의 은혜 때문입니다. 나는 이 사랑과 은혜에 어떻게 감사하고 있습니까. 오늘 내가 하나님의 뜻에 맞추어야 할 부분은 무엇입니까. 잠들지 말고 깨어 기도합시다."
+    "voice": "하나님은 늘 하시던 대로 기도하시며, 기도로 아버지의 뜻에 자신을 맞추시는 분입니다. 위기의 순간에 흔들리지 않은 것은, 평소 기도하는 습관이 몸에 배어 있었기 때문입니다. 격렬한 고통의 기도 가운데서도 자신을 철저히 복종시키셨고, 하나님은 천사를 보내 그 힘겨운 싸움을 붙들어 주셨습니다.\n\n그렇다면 나는 어떻습니까. 나는 예수님을 따라 그 자리까지 가긴 하면서도, 기도하는 습관까지는 따르지 못하고 있지는 않습니까. 나의 구원은 나를 구원하시려는 아버지의 사랑과, 자기 뜻을 복종시키신 예수님의 은혜 때문입니다. 나는 이 사랑과 은혜에 어떻게 감사하고 있습니까. 오늘 내가 하나님의 뜻에 맞추어야 할 부분은 무엇입니까. 잠들지 말고 깨어 기도합시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=R_T2s440FaY"
   },
   {
     "date": "2026-07-15",
@@ -842,7 +1075,8 @@ const DEFAULT_PLAN = [
       "즉흥적으로 행하지 않고, 말씀으로 점검하고 기도로 인도받은 뒤에 움직이게 하소서."
     ],
     "guide": "\"그만해 두어라!\"(눅 22:51)\n\n체포하러 온 무리 앞에서 제자가 칼을 휘둘러 종의 귀를 베었을 때, 예수님은 \"그만해 두어라\" 하시고 그 귀를 만져 고쳐 주십니다. 잡히시는 원수의 때까지도 참으시며, 폭력이 아니라 사랑과 치유로 하나님 나라가 이루어짐을 보여 주십니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 지금 나는 어디에서 칼을 뽑고 싶습니까? 주님은 바로 그 자리에서 \"그만해 두어라\" 하십니다. 오늘 하루, 나를 해친 그 사람에게 오히려 치유의 손을 내밀 수 있겠습니까?",
-    "voice": "하나님은 원수의 때가 되는 것까지 참으시는 분입니다. 이들을 물리칠 능력도 있고 천사를 부르실 수도 있지만, 사탄의 세력을 깨뜨리는 결정타를 위해 아버지의 계획과 때에 자신을 맞추십니다. 또 제자들에게 칼을 쓰지 못하게 하심으로, 주님의 나라가 무력이 아니라 사랑과 치유로 이루어짐을 보여 주시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나의 행동 기준은 무엇입니까. 나는 주님의 나라를 넓히기 위해 어떤 힘을 의지하고 있습니까. 세상의 힘입니까, 사랑과 치유입니까. 또 기도로 준비되지 않은 무지한 열심이, 도리어 주님의 계획을 방해하고 공동체를 곤란하게 하지는 않았습니까. 나는 어떤 문제든 말씀으로 점검하고 기도로 주님의 인도를 구한 뒤에 행합니까, 아니면 즉흥적으로 움직입니까. 오늘 그 자리를 돌아봅시다."
+    "voice": "하나님은 원수의 때가 되는 것까지 참으시는 분입니다. 이들을 물리칠 능력도 있고 천사를 부르실 수도 있지만, 사탄의 세력을 깨뜨리는 결정타를 위해 아버지의 계획과 때에 자신을 맞추십니다. 또 제자들에게 칼을 쓰지 못하게 하심으로, 주님의 나라가 무력이 아니라 사랑과 치유로 이루어짐을 보여 주시는 분입니다.\n\n그렇다면 나는 어떻습니까. 나의 행동 기준은 무엇입니까. 나는 주님의 나라를 넓히기 위해 어떤 힘을 의지하고 있습니까. 세상의 힘입니까, 사랑과 치유입니까. 또 기도로 준비되지 않은 무지한 열심이, 도리어 주님의 계획을 방해하고 공동체를 곤란하게 하지는 않았습니까. 나는 어떤 문제든 말씀으로 점검하고 기도로 주님의 인도를 구한 뒤에 행합니까, 아니면 즉흥적으로 움직입니까. 오늘 그 자리를 돌아봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=M1ZxVQC7vYY"
   },
   {
     "date": "2026-07-16",
@@ -870,7 +1104,8 @@ const DEFAULT_PLAN = [
       "제 욕망을 위해서가 아니라, 주님을 알고 헌신하기 위해 말씀을 더 깊이 알게 하소서."
     ],
     "guide": "\"그러나 이제부터 인자는 전능하신 하나님의 오른쪽에 앉게 될 것이오.\"(눅 22:69)\n\n희롱당하고 신문받는 그 초라한 자리에서, 예수님은 도리어 자신의 영광을 선포하십니다. 지금은 죄인처럼 심문받고 계시지만, 이제부터 인자는 전능하신 하나님의 오른쪽에 앉으실 것이라고 하십니다. 굴욕의 자리에서 나온 승리의 선언입니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 지금 세상에 불의가 판을 치는 것 같아도, 예수님은 하나님 우편에서 세상과 교회를 다스리고 계십니다. 오늘 나는 그 사실을 정말 믿습니까? 그 믿음이 오늘 내 하루를 어떻게 붙들어 주겠습니까?",
-    "voice": "하나님은 죄인의 모습으로 우리가 받아야 할 희롱과 욕설을 대신 받으시며, 묵묵히 참고 견디시는 분입니다. 예수님의 예언자적 권위를 모욕하는 그 자리를 견디시면서도, 이제부터 전능하신 하나님의 오른편에 앉아 궁극적으로 승리하실 것을 선언하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 요즘 신앙 때문에 부당하게 조롱을 당하거나 욕을 먹고 있다면, 주님이 동일한 시험을 받으셨고 지금도 그 자리에 함께하심을 기억하며 위로받고 있습니까. 또 나는 예수님이 어떤 분인지 왜 알고 싶어 합니까. 그분을 잘 알고 헌신하기 위해서입니까, 아니면 종교 지도자들처럼 내 욕망을 채우고 만족하기 위해서입니까. 반드시 다시 오셔서 온 세상을 공정하게 심판하실 주님 앞에 설 때를 준비합시다."
+    "voice": "하나님은 죄인의 모습으로 우리가 받아야 할 희롱과 욕설을 대신 받으시며, 묵묵히 참고 견디시는 분입니다. 예수님의 예언자적 권위를 모욕하는 그 자리를 견디시면서도, 이제부터 전능하신 하나님의 오른편에 앉아 궁극적으로 승리하실 것을 선언하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 요즘 신앙 때문에 부당하게 조롱을 당하거나 욕을 먹고 있다면, 주님이 동일한 시험을 받으셨고 지금도 그 자리에 함께하심을 기억하며 위로받고 있습니까. 또 나는 예수님이 어떤 분인지 왜 알고 싶어 합니까. 그분을 잘 알고 헌신하기 위해서입니까, 아니면 종교 지도자들처럼 내 욕망을 채우고 만족하기 위해서입니까. 반드시 다시 오셔서 온 세상을 공정하게 심판하실 주님 앞에 설 때를 준비합시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=jLuhZ5o_yUM"
   },
   {
     "date": "2026-07-18",
@@ -884,7 +1119,8 @@ const DEFAULT_PLAN = [
       "제게 유리하게 말을 바꾸지 않고, 맡은 책임을 정직하게 감당하게 하소서."
     ],
     "guide": "\"내가 보니 이 사람에게는 아무 죄도 없소.\"(눅 23:4)\n\n친히 신문한 뒤 빌라도는 예수님께 아무 죄도 없다고 선언합니다. 무죄를 알면서도 그는 책임을 지지 않고 예수님을 헤롯에게 떠넘깁니다. 진실을 아는 것과, 그 진실대로 행하는 것은 전혀 다른 일임을 이 한 절이 보여 줍니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 나는 바른 것을 알면서도 사람들 눈치를 보며 책임을 미루고 있지는 않습니까? 오늘 하루, 내가 알면서도 회피하고 있는 마땅히 해야 할 일은 무엇입니까?",
-    "voice": "하나님은 구원받는 일에는 관심 없이 기적만 구경하려는 헤롯의 호기심 앞에서 침묵하시는 분입니다. 헤롯은 예수님이 자기 호기심을 채워 주지 않자 조롱하며 돌려보냈습니다. 주님은 그렇게 구경거리를 찾는 마음에는 자신을 내어 주지 않으십니다.\n\n그렇다면 나는 어떻습니까. 내가 예수님께 나아가는 이유도, 구원을 얻고 인격적으로 교제하기보다 이적을 구경하기 위해서는 아닙니까. 또 유대 지도자들은 예수님을 제거하려 거짓 죄목을 만들었고, 빌라도는 무죄를 알면서도 책임을 떠넘겼습니다. 나는 내게 유리하게 만들려고 말을 바꾸며 거짓을 늘어놓지는 않습니까. 맡아서 처리해야 할 일을 남에게 떠넘기지는 않습니까. 지금 나와 함께한 사람들이, 의와 사랑을 거스르는 편은 아닌지 살펴봅시다."
+    "voice": "하나님은 구원받는 일에는 관심 없이 기적만 구경하려는 헤롯의 호기심 앞에서 침묵하시는 분입니다. 헤롯은 예수님이 자기 호기심을 채워 주지 않자 조롱하며 돌려보냈습니다. 주님은 그렇게 구경거리를 찾는 마음에는 자신을 내어 주지 않으십니다.\n\n그렇다면 나는 어떻습니까. 내가 예수님께 나아가는 이유도, 구원을 얻고 인격적으로 교제하기보다 이적을 구경하기 위해서는 아닙니까. 또 유대 지도자들은 예수님을 제거하려 거짓 죄목을 만들었고, 빌라도는 무죄를 알면서도 책임을 떠넘겼습니다. 나는 내게 유리하게 만들려고 말을 바꾸며 거짓을 늘어놓지는 않습니까. 맡아서 처리해야 할 일을 남에게 떠넘기지는 않습니까. 지금 나와 함께한 사람들이, 의와 사랑을 거스르는 편은 아닌지 살펴봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=2bqwQ4WVmxk"
   },
   {
     "date": "2026-07-20",
@@ -898,7 +1134,8 @@ const DEFAULT_PLAN = [
       "제 욕구를 채우려는 기대가 아니라, 구원하신 주님만으로 만족하게 하소서."
     ],
     "guide": "\"그래서 그는 폭동과 살인 때문에 감옥에 갇힌 자는 그들이 요구하는 대로 놓아주고, 예수는 그들의 뜻대로 하게 넘겨주었다.\"(눅 23:25)\n\n죄 있는 바라바는 풀려나고, 죄 없는 예수님은 십자가에 넘겨집니다. 이 뒤바뀐 자리에 복음이 담겨 있습니다. 죄인이 놓임 받고 의인이 대신 죽는 것, 그것이 바로 나를 위한 대속의 죽음이기 때문입니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 바라바의 자리에 놓인 사람은 다름 아닌 나입니다. 나를 대신해 넘겨지신 그 사랑 앞에서, 오늘 나는 어떤 감사를 드리며 하루를 살겠습니까?",
-    "voice": "하나님은 죄 있는 바라바 대신 죄 없는 예수님을 십자가에 못 박게 하심으로, 우리 대신 죗값을 치르시는 대속의 사랑을 보여 주시는 분입니다. 아버지의 아들이신 예수님이 죽으심으로, 죄인인 우리가 자유를 얻어 진짜 하나님의 자녀가 되게 하신 분입니다.\n\n그렇다면 나는 어떻습니까. 빌라도는 무죄를 알면서도 여론에 밀려 잘못된 판결을 내렸습니다. 나는 바른 것을 알면서도 지금 무엇과 타협하고 있습니까. 백성들은 자기 욕망을 채워 주지 않는다고 예수님께 등을 돌리고 바라바를 선택했습니다. 내가 예수님을 찬양하는 이유는 무엇 때문입니까. 혹시 이 땅에서 잘 먹고 잘 살려는 내 욕구를 채워 주시리란 기대 때문은 아닙니까. 죄와 죽음에서 나를 구원하신 주님만으로 만족하기엔, 아직도 내 속이 허합니까. 오늘 그 마음을 정직하게 들여다봅시다."
+    "voice": "하나님은 죄 있는 바라바 대신 죄 없는 예수님을 십자가에 못 박게 하심으로, 우리 대신 죗값을 치르시는 대속의 사랑을 보여 주시는 분입니다. 아버지의 아들이신 예수님이 죽으심으로, 죄인인 우리가 자유를 얻어 진짜 하나님의 자녀가 되게 하신 분입니다.\n\n그렇다면 나는 어떻습니까. 빌라도는 무죄를 알면서도 여론에 밀려 잘못된 판결을 내렸습니다. 나는 바른 것을 알면서도 지금 무엇과 타협하고 있습니까. 백성들은 자기 욕망을 채워 주지 않는다고 예수님께 등을 돌리고 바라바를 선택했습니다. 내가 예수님을 찬양하는 이유는 무엇 때문입니까. 혹시 이 땅에서 잘 먹고 잘 살려는 내 욕구를 채워 주시리란 기대 때문은 아닙니까. 죄와 죽음에서 나를 구원하신 주님만으로 만족하기엔, 아직도 내 속이 허합니까. 오늘 그 마음을 정직하게 들여다봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=eJNgFKSKQTM"
   },
   {
     "date": "2026-07-21",
@@ -912,7 +1149,8 @@ const DEFAULT_PLAN = [
       "저를 못 박는 자까지 용서하신 그 용서의 은혜가, 제게 넘치게 하소서."
     ],
     "guide": "\"내가 진정으로 네게 말한다. 너는 오늘 나와 함께 낙원에 있을 것이다.\"(눅 23:43)\n\n십자가 위, 함께 처형당하던 강도가 자신의 죄를 인정하고 예수님께 기억해 달라 간구할 때, 주님은 즉시 낙원을 약속하십니다. 자기 죄를 깨닫고 주님의 은혜를 구하는 자에게, 예수님은 지체 없이 하나님 나라를 선물하십니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 이 강도가 받은 은혜는 지금 나에게도 열려 있습니다. 오늘 나는 어떤 죄를 주님 앞에 인정하고, \"나를 기억해 주십시오\" 하고 나아가겠습니까?",
-    "voice": "하나님은 십자가를 지고 가시면서도 자신보다 심판당할 자들을 위해 울라 하시는 분입니다. 죄 없으신 몸으로 범죄자 중 하나로 헤아림 받으시고, 자신을 못 박는 자들의 죄까지 용서해 달라 기도하시며, 죄를 깨닫고 은혜를 구하는 강도에게 즉시 낙원을 허락하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 임박한 심판 앞에서도 회개하지 않는 이 시대의 가정과 사회와 교회를 보며, 나는 통곡하며 애통하고 있습니까. 부활하신 예수님은 지금도 성령을 통해 회개하는 자에게 죄 사함을 베푸십니다. 나는 이 놀라운 용서의 은혜가 나에게까지 넘치는 것을 경험하고 있습니까. 자기 죄를 인정한 강도는 낙원에 들어갔지만, 끝까지 인정하지 않은 강도는 그러지 못했습니다. 지금이라도 내 죄를 깨닫고 회개합시다."
+    "voice": "하나님은 십자가를 지고 가시면서도 자신보다 심판당할 자들을 위해 울라 하시는 분입니다. 죄 없으신 몸으로 범죄자 중 하나로 헤아림 받으시고, 자신을 못 박는 자들의 죄까지 용서해 달라 기도하시며, 죄를 깨닫고 은혜를 구하는 강도에게 즉시 낙원을 허락하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 임박한 심판 앞에서도 회개하지 않는 이 시대의 가정과 사회와 교회를 보며, 나는 통곡하며 애통하고 있습니까. 부활하신 예수님은 지금도 성령을 통해 회개하는 자에게 죄 사함을 베푸십니다. 나는 이 놀라운 용서의 은혜가 나에게까지 넘치는 것을 경험하고 있습니까. 자기 죄를 인정한 강도는 낙원에 들어갔지만, 끝까지 인정하지 않은 강도는 그러지 못했습니다. 지금이라도 내 죄를 깨닫고 회개합시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=ncbyuowTBWg"
   },
   {
     "date": "2026-07-22",
@@ -940,7 +1178,8 @@ const DEFAULT_PLAN = [
       "오늘 만난 부활의 예수님을, 제 곁의 한 사람에게 전하게 하소서."
     ],
     "guide": "\"그분은 여기에 계시지 않고, 살아나셨다.\"(눅 24:6)\n\n향료를 들고 무덤을 찾은 여인들에게, 천사는 이 놀라운 소식을 전합니다. 무덤은 비어 있고, 주님은 살아나셨습니다. 죄와 죽음의 어둠 권세도 부활하신 주님을 가둘 수 없었습니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 요즘 내 삶에 깊은 어둠과 근심으로 무덤에 갇힌 것처럼 절망하는 자리가 있습니까? 살아나신 주님은 그 무덤을 비우실 수 있는 분입니다. 오늘 나는 어떤 절망의 무덤 앞에서 부활의 주님을 노래하겠습니까?",
-    "voice": "하나님은 무덤에 계시지 않는 분입니다. 무덤을 찾은 여인들은 부활을 기대하지 않았기에 빈 무덤을 보고 근심했지만, 그 빈 무덤은 근심의 이유가 아니라 주님이 살아나셨다는 확실한 증거였습니다. 주님은 미리 말씀하신 그대로 죽은 자 가운데서 다시 살아나신 분입니다.\n\n그렇다면 나는 어떻습니까. 그가 말씀하시매 우주 만물이 견고히 섰고, 바다가 잠잠하고, 죽은 자가 일어났습니다. 나는 그 주님의 말씀을 경솔히 듣고 있지는 않습니까. 여인들은 자신들이 목격한 사실을 제자들에게 증거했습니다. 나는 오늘 누구에게 내가 만난 부활의 예수님을 전하겠습니까. 제자들은 여인들의 말을 헛소리처럼 여겼습니다. 어떤 믿기지 않는 상황이 와도 말씀을 신뢰할 만큼, 나는 평소 주님과 깊이 교제하고 있습니까. 오늘 부활의 감격을 회복합시다."
+    "voice": "하나님은 무덤에 계시지 않는 분입니다. 무덤을 찾은 여인들은 부활을 기대하지 않았기에 빈 무덤을 보고 근심했지만, 그 빈 무덤은 근심의 이유가 아니라 주님이 살아나셨다는 확실한 증거였습니다. 주님은 미리 말씀하신 그대로 죽은 자 가운데서 다시 살아나신 분입니다.\n\n그렇다면 나는 어떻습니까. 그가 말씀하시매 우주 만물이 견고히 섰고, 바다가 잠잠하고, 죽은 자가 일어났습니다. 나는 그 주님의 말씀을 경솔히 듣고 있지는 않습니까. 여인들은 자신들이 목격한 사실을 제자들에게 증거했습니다. 나는 오늘 누구에게 내가 만난 부활의 예수님을 전하겠습니까. 제자들은 여인들의 말을 헛소리처럼 여겼습니다. 어떤 믿기지 않는 상황이 와도 말씀을 신뢰할 만큼, 나는 평소 주님과 깊이 교제하고 있습니까. 오늘 부활의 감격을 회복합시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=l41jYY35Aeg"
   },
   {
     "date": "2026-07-24",
@@ -968,7 +1207,8 @@ const DEFAULT_PLAN = [
       "위로부터 오는 성령의 능력을 입어, 그리스도의 증인으로 살게 하소서."
     ],
     "guide": "\"너희는 이 일의 증인이다.\"(눅 24:48)\n\n부활하신 주님은 제자들에게 성경을 깨닫게 하신 뒤, 그들의 정체성을 한마디로 못 박으십니다. \"너희는 증인이다.\" 십자가와 부활을 목격한 자는, 그것을 예루살렘에서부터 모든 족속에게 전하는 증인으로 세워집니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 주님은 나 역시 이 일의 증인으로 부르십니다. 오늘 하루, 나는 내가 만난 그 부활의 사실을 어디에서, 누구에게 증언하는 삶을 살겠습니까?",
-    "voice": "하나님은 부활 후 친히 제자들 가운데 나타나 평강을 주시는 분입니다. 유령이 아니라 만질 수 있고 생선 한 토막을 잡수시는 실재하는 몸으로 자신을 보이시고, 그들의 마음을 열어 성경을 깨닫게 하시며, 위로부터 오는 성령의 능력을 약속하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 아직도 예수님의 부활이 믿기지 않는다면, 모세 앞에 \"나는 스스로 있는 자\"라 하셨던 하나님이 오늘 내게 오셔서 \"나는 살아 있다\" 말씀하시는 것을 주목하고 있습니까. 나와 우리 교회는 예수 그리스도를 온 세상에 증거하는 사명을 잘 감당하고 있습니까. 아버지로부터 오는 힘 없이는 이 사명을 감당할 수 없습니다. 하나님 우편에 앉아 계신 주님의 재림을 기다리는 나의 요즘 생활은 어떻습니까. 성령의 권능을 구하며 증인으로 서 봅시다."
+    "voice": "하나님은 부활 후 친히 제자들 가운데 나타나 평강을 주시는 분입니다. 유령이 아니라 만질 수 있고 생선 한 토막을 잡수시는 실재하는 몸으로 자신을 보이시고, 그들의 마음을 열어 성경을 깨닫게 하시며, 위로부터 오는 성령의 능력을 약속하시는 분입니다.\n\n그렇다면 나는 어떻습니까. 아직도 예수님의 부활이 믿기지 않는다면, 모세 앞에 \"나는 스스로 있는 자\"라 하셨던 하나님이 오늘 내게 오셔서 \"나는 살아 있다\" 말씀하시는 것을 주목하고 있습니까. 나와 우리 교회는 예수 그리스도를 온 세상에 증거하는 사명을 잘 감당하고 있습니까. 아버지로부터 오는 힘 없이는 이 사명을 감당할 수 없습니다. 하나님 우편에 앉아 계신 주님의 재림을 기다리는 나의 요즘 생활은 어떻습니까. 성령의 권능을 구하며 증인으로 서 봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=WHHq_GiyAQA"
   },
   {
     "date": "2026-07-27",
@@ -996,7 +1236,8 @@ const DEFAULT_PLAN = [
       "피조물에 의존하지 않고, 오직 창조주 하나님만 높이며 경배하게 하소서."
     ],
     "guide": "\"하나님이 커다란 바다 짐승들과 물에서 번성하는 움직이는 모든 생물을 그 종류대로 창조하시고 ... 하나님 보시기에 좋았다.\"(창 1:21)\n\n고대 사람들이 두려워하던 바다의 거대한 짐승들까지도, 하나님의 손에서 나온 피조물일 뿐입니다. 무엇도 스스로 번성한 것이 없습니다. 주께서 손수 말씀하시고 복 주어 빚으신 결과이며, 그 모든 것을 보시고 \"좋다\" 하셨습니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 내가 크게 두려워하는 것들도 실은 하나님의 손안에 있는 피조물입니다. 오늘 나를 짓누르는 그 '큰 물고기' 같은 두려움을, 나는 어떤 마음으로 창조주 앞에 내려놓겠습니까?",
-    "voice": "하나님은 질서 정연한 분이십니다. 처음 사흘 동안 본질과 공간을 만드시고, 나머지 사흘 동안 그것을 채울 생명을 두심으로, 혼돈을 극복하고 공허를 채우십니다. 고대 사람들이 신으로 떠받들던 해와 달과 별도, 두려워하던 바다 짐승도 모두 그분의 명령에 순종하는 피조물일 뿐입니다.\n\n그렇다면 나는 어떻습니까. 나는 날마다 하나님의 말씀을 따라, 내가 있어야 할 곳에 있고 해야 할 일을 잘 감당하고 있습니까. 그렇게 하나님이 만드신 질서의 일부가 되어, 내 가정과 직장과 공동체에 보시기에 좋은 창조를 이뤄 내고 있습니까. 또 나는 창조주를 비껴 피조물에 지나치게 의존하거나 경배하고 있지는 않습니까. 지금 인간의 탐욕으로 피조물이 신음하는데, 구속받은 백성인 나부터 이 자연계와 더불어 잘 살아가고 있습니까. 오직 창조주 하나님만 높입시다."
+    "voice": "하나님은 질서 정연한 분이십니다. 처음 사흘 동안 본질과 공간을 만드시고, 나머지 사흘 동안 그것을 채울 생명을 두심으로, 혼돈을 극복하고 공허를 채우십니다. 고대 사람들이 신으로 떠받들던 해와 달과 별도, 두려워하던 바다 짐승도 모두 그분의 명령에 순종하는 피조물일 뿐입니다.\n\n그렇다면 나는 어떻습니까. 나는 날마다 하나님의 말씀을 따라, 내가 있어야 할 곳에 있고 해야 할 일을 잘 감당하고 있습니까. 그렇게 하나님이 만드신 질서의 일부가 되어, 내 가정과 직장과 공동체에 보시기에 좋은 창조를 이뤄 내고 있습니까. 또 나는 창조주를 비껴 피조물에 지나치게 의존하거나 경배하고 있지는 않습니까. 지금 인간의 탐욕으로 피조물이 신음하는데, 구속받은 백성인 나부터 이 자연계와 더불어 잘 살아가고 있습니까. 오직 창조주 하나님만 높입시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=SrVst22Zh9s"
   },
   {
     "date": "2026-07-29",
@@ -1024,7 +1265,8 @@ const DEFAULT_PLAN = [
       "저를 위한 사람보다, 곁의 사람을 위한 제 책임과 역할을 먼저 살피게 하소서."
     ],
     "guide": "\"주 하나님이 땅의 흙으로 사람을 지으시고, 그의 코에 생명의 기운을 불어넣으시니, 사람이 생명체가 되었다.\"(창 2:7)\n\n사람은 흙으로 지어졌습니다. 그러나 하나님이 그 코에 생명의 기운을 불어넣으실 때 비로소 살아 있는 존재가 되었습니다. 이 한 절에 인간의 한계와 존귀함이 함께 담겨 있습니다. 하나님을 떠난 인간은 흙일 뿐이지만, 그분의 숨을 받은 인간은 하나님과 사랑을 나누는 존재입니다.\n\n오늘 이 한 절 앞에 머물러 보십시오. 내 생명은 내 것이 아니라, 하나님이 불어넣어 주신 숨으로 사는 것입니다. 오늘 나는 그 사실을 기억하며, 이 하루의 숨결을 어떻게 하나님께 돌려드리겠습니까?",
-    "voice": "하나님은 흙으로 사람을 지으시고 생명의 기운을 불어넣으신 분입니다. 사람에게 에덴을 맡겨 경작하고 돌보게 하시며 노동을 신성한 역할로 주셨고, 모든 열매를 먹게 하시되 선악과 하나만은 금하심으로 참 생명을 누리는 올바른 관계의 이정표를 세워 주셨습니다. 또 사람이 혼자 있는 것이 좋지 않다며, 동등하고 상호 보완적인 배필을 지어 주신 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 하나님을 떠나 흙일 뿐인 존재임을 알면서도, 그분의 영으로 새롭게 창조된 은혜를 기억하고 있습니까. 이 땅에 사는 동안 성실히 일하고 정직한 땀의 대가를 양식으로 취하고 있습니까. 결혼과 관계에서, 나를 위한 배우자보다 배우자를 위한 내 책임과 역할을 살피고 있습니까. 부모나 자녀, 직장이나 교회의 일보다 먼저 배우자에게 더 정성을 보일 필요는 없습니까. 오늘 그 관계를 돌아봅시다."
+    "voice": "하나님은 흙으로 사람을 지으시고 생명의 기운을 불어넣으신 분입니다. 사람에게 에덴을 맡겨 경작하고 돌보게 하시며 노동을 신성한 역할로 주셨고, 모든 열매를 먹게 하시되 선악과 하나만은 금하심으로 참 생명을 누리는 올바른 관계의 이정표를 세워 주셨습니다. 또 사람이 혼자 있는 것이 좋지 않다며, 동등하고 상호 보완적인 배필을 지어 주신 분입니다.\n\n그렇다면 나는 어떻습니까. 나는 하나님을 떠나 흙일 뿐인 존재임을 알면서도, 그분의 영으로 새롭게 창조된 은혜를 기억하고 있습니까. 이 땅에 사는 동안 성실히 일하고 정직한 땀의 대가를 양식으로 취하고 있습니까. 결혼과 관계에서, 나를 위한 배우자보다 배우자를 위한 내 책임과 역할을 살피고 있습니까. 부모나 자녀, 직장이나 교회의 일보다 먼저 배우자에게 더 정성을 보일 필요는 없습니까. 오늘 그 관계를 돌아봅시다.",
+    "hymnUrl": "https://www.youtube.com/watch?v=-vQvI0B4AJg"
   },
   {
     "date": "2026-07-31",
@@ -1047,28 +1289,78 @@ const BOOK_CODE = { "창세기":"GEN", "누가복음":"LUK" };
 const PERIODS = ['morning','midday','evening'];
 const PERIOD_KO = { morning:'아침', midday:'낮', evening:'저녁' };
 
-const planByDate = {};
-DEFAULT_PLAN.forEach(c => planByDate[c.date] = c);
-const MIN_DATE = DEFAULT_PLAN[0].date, MAX_DATE = DEFAULT_PLAN[DEFAULT_PLAN.length-1].date;
+/* ── 월별 데이터 로더 ──
+   data/YYYY-MM.json 을 자동으로 불러온다.
+   우선순위: ① 서버 fetch(항상 최신) → ② localStorage 캐시(오프라인) → ③ 내장 폴백 */
+const months = {};        // 'YYYY-MM' → 배열
+const monthStatus = {};   // 'YYYY-MM' → 'ok' | 'missing'
+let planByDate = {};
+
+function ymOf(key){ return key.slice(0,7); }
+function registerMonth(ym, arr){
+  months[ym] = arr;
+  arr.forEach(c => planByDate[c.date] = c);
+  monthStatus[ym] = 'ok';
+}
+async function loadMonth(ym){
+  if (monthStatus[ym] === 'ok') return true;
+  if (monthStatus[ym] === 'missing') return false;
+  // ① 서버에서 (캐시 우회로 항상 최신)
+  try {
+    const res = await fetch(`data/${ym}.json?v=${Date.now()}`, { cache: 'no-store' });
+    if (res.ok) {
+      const arr = await res.json();
+      if (Array.isArray(arr) && arr.length) {
+        registerMonth(ym, arr);
+        try { localStorage.setItem('plancache_' + ym, JSON.stringify(arr)); } catch(e){}
+        return true;
+      }
+    }
+  } catch(e){ /* 오프라인·file:// → 아래 폴백 */ }
+  // ② 이전에 받아둔 캐시
+  try {
+    const cached = localStorage.getItem('plancache_' + ym);
+    if (cached) {
+      const arr = JSON.parse(cached);
+      if (Array.isArray(arr) && arr.length) { registerMonth(ym, arr); return true; }
+    }
+  } catch(e){}
+  // ③ 파일에 내장된 폴백(첫 배포 달)
+  if (DEFAULT_PLAN.length && ymOf(DEFAULT_PLAN[0].date) === ym) {
+    registerMonth(ym, DEFAULT_PLAN); return true;
+  }
+  monthStatus[ym] = 'missing';
+  return false;
+}
 
 function fmtKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function parseKey(k){ const [y,m,d]=k.split('-').map(Number); return new Date(y, m-1, d); }
 function todayKey(){ return fmtKey(new Date()); }
-function clampKey(k){ return k < MIN_DATE ? MIN_DATE : (k > MAX_DATE ? MAX_DATE : k); }
 function shiftKey(k, n){ const d=parseKey(k); d.setDate(d.getDate()+n); return fmtKey(d); }
 function isSunday(k){ return parseKey(k).getDay() === 0; }
+function isRestDay(k){ return isSunday(k) || !planByDate[k]; }  // 주일 또는 데이터 없는 날
 function chapterUrl(ref){
   const book = Object.keys(BOOK_CODE).find(b => (ref||'').includes(b)) || "누가복음";
   const m = (ref||'').match(/(\d+)\s*:/);
   return m ? BIBLE_BASE + BOOK_CODE[book] + "." + m[1] : BIBLE_BASE;
 }
 function searchUrl(type, title){ return "https://www.youtube.com/results?search_query=" + encodeURIComponent(type + " " + title); }
+/* 곡 링크: 데이터에 지정 URL이 있으면 그 곡으로 바로, 없으면 유튜브 검색으로 */
+function songUrl(c, kind){
+  const isUrl = v => typeof v === 'string' && /^https?:\/\//.test(v.trim());
+  const direct = kind === 'hymn' ? c.hymnUrl : c.gospelUrl;
+  if (isUrl(direct)) return direct.trim();
+  const title = kind === 'hymn' ? c.hymn : c.gospel;
+  if (isUrl(title)) return title.trim();               // 제목 칸에 링크가 들어온 경우도 직행
+  return kind === 'hymn' ? searchUrl("찬양", title) : searchUrl("찬양", title);
+}
 function periodNow(h){ if(h>=5 && h<11) return 'morning'; if(h>=11 && h<17) return 'midday'; return 'evening'; }
 function esc(s){ return (s||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 function paragraphs(text, deep){
   const parts = (text||'').split(/\n{2,}/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean);
+  const TURN_RE = /^(오늘 주님은|그렇다면 나는|그렇다면 우리는|이제 나는)/;
   return parts.map(p=>{
-    const turn = deep && /^오늘 주님은/.test(p) ? ' class="turn"' : '';
+    const turn = deep && TURN_RE.test(p) ? ' class="turn"' : '';
     return `<p${turn}>${esc(p)}</p>`;
   }).join('');
 }
@@ -1079,7 +1371,7 @@ function memoTimeKey(p, k){ return `memot_${p}_${k}`; }
 function prayKey(k){ return 'pray_' + k; }
 
 /* ── 상태 ── */
-let selectedDate = clampKey(todayKey());
+let selectedDate = todayKey();
 let currentSession = 'morning';
 
 /* ── 완료 판정: 메모가 있으면 그 시간대 완료 / 저녁은 기도 전체 체크로도 완료 ── */
@@ -1101,14 +1393,19 @@ function renderDateNav(){
   const d = parseKey(selectedDate);
   document.getElementById('dnDate').innerHTML =
     `${d.getFullYear()}. ${String(d.getMonth()+1).padStart(2,'0')}. ${String(d.getDate()).padStart(2,'0')} <span class="dow">${DOW[d.getDay()]}</span>`;
-  document.getElementById('prevDay').disabled = selectedDate <= MIN_DATE;
-  document.getElementById('nextDay').disabled = selectedDate >= MAX_DATE;
+  document.getElementById('prevDay').disabled = monthStatus[ymOf(shiftKey(selectedDate,-1))] === 'missing' && ymOf(shiftKey(selectedDate,-1)) !== ymOf(selectedDate);
+  document.getElementById('nextDay').disabled = monthStatus[ymOf(shiftKey(selectedDate, 1))] === 'missing' && ymOf(shiftKey(selectedDate, 1)) !== ymOf(selectedDate);
   document.getElementById('goToday').style.display =
-    (selectedDate === clampKey(todayKey())) ? 'none' : '';
+    (selectedDate === todayKey()) ? 'none' : '';
   const dots = document.querySelectorAll('#dnDots i');
-  if (isSunday(selectedDate)) { dots.forEach(i=>i.classList.remove('done')); }
+  if (isRestDay(selectedDate)) { dots.forEach(i=>i.classList.remove('done')); }
   else dayDots(selectedDate).forEach((on,i)=>dots[i].classList.toggle('done', on));
-  document.getElementById('dnDots').style.visibility = isSunday(selectedDate) ? 'hidden' : 'visible';
+  document.getElementById('dnDots').style.visibility = isRestDay(selectedDate) ? 'hidden' : 'visible';
+  // 브랜드 부제: 보고 있는 달 기준
+  const entries = months[ymOf(selectedDate)] || [];
+  const book = entries.length ? (entries[0].ref.match(/^[가-힣]+/)||['묵상'])[0] : '';
+  document.getElementById('brandSub').textContent =
+    `${d.getFullYear()}년 ${d.getMonth()+1}월${book ? ' · ' + book : ''}`;
 }
 
 /* ── 본문 렌더 ── */
@@ -1120,14 +1417,12 @@ function renderContent(){
   document.getElementById('mVRef').textContent = c.verseRef || c.ref;
   document.getElementById('mGuide').innerHTML = paragraphs(c.guide, false);
   document.getElementById('mBible').href = chapterUrl(c.ref);
-  document.getElementById('mHymn').href = searchUrl("찬송가", c.hymn);
-  document.getElementById('mGospel').href = searchUrl("찬양", c.gospel);
+  document.getElementById('mHymn').href = songUrl(c, 'hymn');
 
   document.getElementById('dRef').textContent = c.ref;
   document.getElementById('dVoice').innerHTML = paragraphs(c.voice, true);
   document.getElementById('dBible').href = chapterUrl(c.ref);
-  document.getElementById('dHymn').href = searchUrl("찬송가", c.hymn);
-  document.getElementById('dGospel').href = searchUrl("찬양", c.gospel);
+  document.getElementById('dHymn').href = songUrl(c, 'hymn');
 
   renderPrayers(c);
   document.querySelectorAll('.memo textarea').forEach(loadMemo);
@@ -1236,10 +1531,18 @@ function setOrb(sess, animate){
   }
   raf(step);
 }
-function showSess(which){
+function renderRest(){
   const sun = isSunday(selectedDate);
-  document.getElementById('sesnav').style.display = sun ? 'none' : '';
-  if (sun) which = 'sunday';
+  document.getElementById('restEyebrow').textContent = sun ? "Lord\u2019s Day" : "Selah";
+  document.getElementById('restTitle').textContent = sun ? "주일, 예배의 날" : "잠시 쉬어가는 날";
+  document.getElementById('restBody').innerHTML = sun
+    ? "오늘은 개인 묵상 대신<br>함께 모여 예배로 하나님을 만나는 날입니다.<br><br>한 주간 받은 은혜를 마음에 품고<br>기쁨으로 예배의 자리로 나아가십시오."
+    : "이 날짜의 묵상 자료가 아직 준비되지 않았습니다.<br><br>잠시 숨을 고르며<br>받은 말씀을 마음에 되새겨 보십시오.";
+}
+function showSess(which){
+  const rest = isRestDay(selectedDate);
+  document.getElementById('sesnav').style.display = rest ? 'none' : '';
+  if (rest) { which = 'sunday'; renderRest(); }
   else if (which === 'sunday') which = currentSession;
 
   document.querySelectorAll('.sess').forEach(s=>s.classList.toggle('on', s.id===which));
@@ -1250,7 +1553,7 @@ function showSess(which){
     dot.classList.toggle('on', dot.dataset.dot===which);
   });
   document.body.setAttribute('data-session', which);
-  if (!sun) { const animate = currentSession !== which; currentSession = which; setOrb(which, animate); }
+  if (!rest) { const animate = currentSession !== which; currentSession = which; setOrb(which, animate); }
   window.scrollTo({ top:0, behavior:'instant' });
 }
 document.getElementById('sesnav').addEventListener('click', e=>{
@@ -1283,8 +1586,14 @@ function markNowPill(){
 }
 
 /* ── 날짜 이동 ── */
-function goDate(k, keepSession){
-  selectedDate = clampKey(k);
+async function goDate(k, keepSession){
+  const ok = await loadMonth(ymOf(k));
+  if (!ok && !months[ymOf(k)]) {
+    toast('해당 달의 묵상이 아직 준비되지 않았습니다.');
+    renderDateNav();
+    return;
+  }
+  selectedDate = k;
   renderDateNav();
   renderContent();
   markNowPill();
@@ -1301,7 +1610,7 @@ document.getElementById('wrap').addEventListener('touchstart', e=>{
   tOK=true; tX=e.touches[0].clientX; tY=e.touches[0].clientY;
 }, {passive:true});
 document.getElementById('wrap').addEventListener('touchend', e=>{
-  if(!tOK || isSunday(selectedDate)) return;
+  if(!tOK || isRestDay(selectedDate)) return;
   const dx = e.changedTouches[0].clientX - tX, dy = e.changedTouches[0].clientY - tY;
   if (Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy)*1.4) return;
   const i = PERIODS.indexOf(currentSession);
@@ -1332,9 +1641,18 @@ document.getElementById('sheetBg').addEventListener('click', closeSheet);
 window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSheet(); });
 
 function buildJourney(){
-  /* 통계 */
+  const ym = ymOf(selectedDate);
+  const entries = (months[ym] || []).slice().sort((a,b)=>a.date.localeCompare(b.date));
+  const dv = parseKey(selectedDate);
+  const year = dv.getFullYear(), month = dv.getMonth();
+
+  /* 부제: 보고 있는 달 */
+  const book = entries.length ? (entries[0].ref.match(/^[가-힣]+/)||['묵상'])[0] : '묵상';
+  document.getElementById('sheetSub').textContent = `${book} · ${year}년 ${month+1}월`;
+
+  /* 통계 (이 달) */
   let days=0, memos=0, prays=0;
-  DEFAULT_PLAN.forEach(c=>{
+  entries.forEach(c=>{
     const d = dayDots(c.date);
     if (d.some(Boolean)) days++;
     PERIODS.forEach(p=>{ if((localStorage.getItem(memoKey(p,c.date))||'').trim()) memos++; });
@@ -1344,9 +1662,7 @@ function buildJourney(){
   document.getElementById('stMemos').textContent = memos;
   document.getElementById('stPrays').textContent = prays;
 
-  /* 달력 (7월 2026) */
-  const first = parseKey(MIN_DATE);
-  const year = first.getFullYear(), month = first.getMonth();
+  /* 달력 (보고 있는 달) */
   const lastDay = new Date(year, month+1, 0).getDate();
   const lead = new Date(year, month, 1).getDay();
   const cal = document.getElementById('cal');
@@ -1355,11 +1671,12 @@ function buildJourney(){
   for(let i=0;i<lead;i++) html += '<div class="cell blank"></div>';
   for(let d=1; d<=lastDay; d++){
     const k = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const sun = isSunday(k);
-    const dots = sun ? [] : dayDots(k);
-    const full = !sun && dots.every(Boolean);
-    const cls = ['cell', sun?'sun2':'', k===tk?'today':'', k===selectedDate?'sel':'', full?'full':''].filter(Boolean).join(' ');
-    const mini = sun ? '<div class="mini" style="font-size:.5rem;color:var(--gold);height:auto">✦</div>'
+    const rest = isSunday(k) || !planByDate[k];
+    const dots = rest ? [] : dayDots(k);
+    const full = !rest && dots.every(Boolean);
+    const cls = ['cell', isSunday(k)?'sun2':'', k===tk?'today':'', k===selectedDate?'sel':'', full?'full':''].filter(Boolean).join(' ');
+    const mini = isSunday(k) ? '<div class="mini" style="font-size:.5rem;color:var(--gold);height:auto">✦</div>'
+      : rest ? '<div class="mini"></div>'
       : '<div class="mini">' + dots.map(on=>`<i${on?' class="on"':''}></i>`).join('') + '</div>';
     html += `<div class="${cls}" data-k="${k}" role="button" tabindex="0"><span class="d">${d}</span>${mini}</div>`;
   }
@@ -1368,10 +1685,10 @@ function buildJourney(){
     cell.addEventListener('click', ()=>{ closeSheet(); goDate(cell.dataset.k, false); });
   });
 
-  /* 기록 모아보기 (최신순) */
+  /* 기록 모아보기 (이 달, 최신순) */
   const list = document.getElementById('jrList');
   const items = [];
-  DEFAULT_PLAN.forEach(c=>{
+  entries.forEach(c=>{
     PERIODS.forEach(p=>{
       const v = (localStorage.getItem(memoKey(p, c.date)) || '').trim();
       if (v) items.push({ date:c.date, period:p, ref:c.ref, text:v });
@@ -1424,7 +1741,7 @@ function askConfirm(title, msg, label){
 }
 
 /* ── 내보내기: 이 앱이 저장한 모든 기록을 하나의 JSON 파일로 ── */
-const APP_PREFIX_RE = /^(memo_|memot_|pray_)/;
+const APP_PREFIX_RE = /^(memo_|memot_|pray_|cele_)/;
 function collectAppData(){
   const data = {};
   for (let i=0; i<localStorage.length; i++){
@@ -1438,7 +1755,7 @@ function buildExportPayload(){
     app: 'muksang-journey',
     version: 2,
     exportedAt: new Date().toISOString(),
-    range: { from: MIN_DATE, to: MAX_DATE },
+    range: (function(){ const ds=Object.keys(planByDate).sort(); return ds.length?{from:ds[0],to:ds[ds.length-1]}:null; })(),
     data: collectAppData()
   };
 }
@@ -1517,7 +1834,7 @@ const cele = document.getElementById('cele');
 function celeKey(k){ return 'cele_' + k; }
 function maybeCelebrate(){
   const k = selectedDate;
-  if (isSunday(k)) return;
+  if (isRestDay(k)) return;
   if (localStorage.getItem(celeKey(k))) return;           // 이미 축하한 날
   if (!dayDots(k).every(Boolean)) return;                 // 아직 미완주
   localStorage.setItem(celeKey(k), '1');
@@ -1547,6 +1864,255 @@ function closeCele(){
 cele.addEventListener('click', closeCele);
 window.addEventListener('keydown', e=>{ if(e.key==='Escape' && cele.classList.contains('open')) closeCele(); });
 
+/* ── 홈 화면 추가 안내 ── */
+const isStandalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+const isKakao = /KAKAOTALK/i.test(navigator.userAgent || '');
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const nb = document.getElementById('instNative');
+  if (nb) nb.classList.add('show');
+});
+const instSheet = document.getElementById('instSheet');
+function openInst(expand){
+  // 특정 항목만 펼치고 나머지는 접기 (expand 없으면 전체 접힌 목차)
+  document.querySelectorAll('#accWrap .acc-item').forEach(it=>{
+    it.classList.toggle('open', !!expand && it.dataset.acc === expand);
+  });
+  instSheet.classList.add('open'); instSheet.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeInst(){
+  instSheet.classList.remove('open'); instSheet.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+/* 아코디언: 하나만 열리게 */
+document.getElementById('accWrap').addEventListener('click', e=>{
+  const head = e.target.closest('.acc-head');
+  if (!head) return;
+  const item = head.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('#accWrap .acc-item').forEach(it=>it.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+});
+document.getElementById('installBtn').addEventListener('click', ()=>openInst());
+document.getElementById('instClose').addEventListener('click', closeInst);
+document.getElementById('instBg').addEventListener('click', closeInst);
+document.getElementById('instNative').addEventListener('click', async ()=>{
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const res = await deferredPrompt.userChoice.catch(()=>null);
+  deferredPrompt = null;
+  document.getElementById('instNative').classList.remove('show');
+  if (res && res.outcome === 'accepted') { closeInst(); toast('홈 화면에 추가되었습니다.'); }
+});
+/* 첫 방문 배너 (설치 전 + 닫은 적 없을 때) */
+(function initBanner(){
+  if (isStandalone || localStorage.getItem('installDismiss')) return;
+  const b = document.getElementById('installBanner');
+  if (isKakao) b.querySelector('.ib-txt').innerHTML =
+    '카카오톡 안에서는 일부 기능이 제한됩니다. <b id="ibHow">브라우저로 여는 방법</b>';
+  b.classList.add('show');
+  b.querySelector('#ibHow').addEventListener('click', ()=>openInst('install'));
+  document.getElementById('ibClose').addEventListener('click', ()=>{
+    b.classList.remove('show');
+    localStorage.setItem('installDismiss','1');
+  });
+})();
+
+/* ── 집중 보기: 길게 눌러 전체 화면 ── */
+const LP_MS = 800;                       // 길게 누르기 판정(0.8초)
+const focusEl = document.getElementById('focus');
+const focusInner = document.getElementById('focusInner');
+function openFocus(kind){
+  const c = planByDate[selectedDate];
+  if (!c) return;
+  const dv = parseKey(selectedDate);
+  const dateLabel = `${dv.getFullYear()}. ${String(dv.getMonth()+1).padStart(2,'0')}. ${String(dv.getDate()).padStart(2,'0')} ${DOW[dv.getDay()]}`;
+  focusEl.classList.toggle('verse', kind === 'verse');
+  if (kind === 'verse') {
+    focusInner.innerHTML = `
+      <div class="focus-kicker">오늘의 한 구절</div>
+      <div class="focus-verse-date">${dateLabel}</div>
+      <div class="focus-verse-ref">${esc(c.verseRef || c.ref)}</div>
+      <div class="rule"></div>
+      <a class="btn btn-primary focus-verse-btn" href="${chapterUrl(c.ref)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        새한글성경 본문 보기</a>
+      <div class="focus-nav">
+        <button class="fnav" id="fPrev" aria-label="이전 날 구절">‹</button>
+        <button class="fshare" id="fShare">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg>
+          말씀 카드 공유</button>
+        <button class="fnav" id="fNext" aria-label="다음 날 구절">›</button>
+      </div>`;
+  } else {
+    const isVoice = kind === 'voice';
+    focusInner.innerHTML = `
+      <div class="focus-kicker">${isVoice ? '낮 · 깊은 묵상' : '아침 · 여는 묵상'}</div>
+      <div class="focus-read-title">${esc(c.ref)}</div>
+      <div class="focus-body">${paragraphs(isVoice ? c.voice : c.guide, isVoice)}</div>
+      <div class="focus-hint">화면 우측 상단 ✕ 를 누르면 돌아갑니다</div>`;
+  }
+  focusEl.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFocus(){
+  focusEl.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('focusClose').addEventListener('click', closeFocus);
+window.addEventListener('keydown', e=>{ if(e.key==='Escape' && focusEl.classList.contains('open')) closeFocus(); });
+
+/* 집중 보기 내부 버튼 (내용이 갈릴 때마다 다시 붙지 않도록 위임) */
+focusInner.addEventListener('click', e=>{
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.id === 'fPrev') focusStep(-1);
+  else if (b.id === 'fNext') focusStep(1);
+  else if (b.id === 'fShare') shareVerseCard();
+});
+
+/* 이전/다음 묵상일로 이동 (주일·빈 날은 건너뜀) */
+let focusStepping = false;
+async function focusStep(dir){
+  if (focusStepping) return;
+  focusStepping = true;
+  try {
+    let k = selectedDate;
+    for (let i = 0; i < 45; i++) {
+      k = shiftKey(k, dir);
+      const okm = await loadMonth(ymOf(k));
+      if (!okm && !months[ymOf(k)]) {
+        toast(dir > 0 ? '다음 달 묵상이 아직 준비되지 않았습니다.' : '더 이전의 묵상이 없습니다.');
+        return;
+      }
+      if (planByDate[k]) {
+        await goDate(k, true);
+        openFocus('verse');
+        return;
+      }
+    }
+  } finally { focusStepping = false; }
+}
+
+/* 말씀 카드 이미지 생성 → 공유(지원 시) 또는 저장 */
+async function shareVerseCard(){
+  const c = planByDate[selectedDate];
+  if (!c) return;
+  const cv = document.createElement('canvas');
+  cv.width = 1080; cv.height = 1350;
+  const x = cv.getContext && cv.getContext('2d');
+  if (!x) { toast('이 브라우저에서는 카드 생성을 지원하지 않습니다.'); return; }
+  try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch(e){}
+
+  const W = cv.width, H = cv.height;
+  // 배경
+  x.fillStyle = '#0A0A0C'; x.fillRect(0, 0, W, H);
+  // 상단 금빛 글로우
+  let g = x.createRadialGradient(W/2, H*0.06, 0, W/2, H*0.06, W*0.72);
+  g.addColorStop(0, 'rgba(212,175,55,0.20)'); g.addColorStop(1, 'rgba(212,175,55,0)');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // 태양 호 (점선) + 해
+  const p0={x:W*0.20,y:H*0.30}, p1={x:W*0.50,y:H*0.10}, p2={x:W*0.80,y:H*0.30};
+  const bz = t => { const u=1-t; return {
+    x: u*u*p0.x + 2*u*t*p1.x + t*t*p2.x, y: u*u*p0.y + 2*u*t*p1.y + t*t*p2.y }; };
+  x.fillStyle = 'rgba(200,190,160,0.5)';
+  for (let i=0; i<=100; i+=4){ const p=bz(i/100); x.beginPath(); x.arc(p.x,p.y,3,0,7); x.fill(); }
+  const s = bz(0.5);
+  g = x.createRadialGradient(s.x, s.y, 0, s.x, s.y, 130);
+  g.addColorStop(0,'rgba(212,175,55,0.55)'); g.addColorStop(1,'rgba(212,175,55,0)');
+  x.fillStyle = g; x.beginPath(); x.arc(s.x, s.y, 130, 0, 7); x.fill();
+  [[36,'#A87E1E'],[29,'#D4AF37'],[19,'#FFEBB4']].forEach(([r,col])=>{
+    x.fillStyle = col; x.beginPath(); x.arc(s.x, s.y, r, 0, 7); x.fill(); });
+  x.textAlign = 'center';
+  // 교회명
+  x.fillStyle = '#D4AF37';
+  x.font = '700 30px "Noto Sans KR", sans-serif';
+  x.fillText('한 세 교 회', W/2, H*0.40);
+  // 날짜
+  const dv = parseKey(selectedDate);
+  x.fillStyle = '#857D73';
+  x.font = '400 30px "Noto Sans KR", sans-serif';
+  x.fillText(`${dv.getFullYear()}. ${String(dv.getMonth()+1).padStart(2,'0')}. ${String(dv.getDate()).padStart(2,'0')}  ${DOW[dv.getDay()]}요일`, W/2, H*0.465);
+  // 인용부호
+  x.fillStyle = 'rgba(200,154,46,0.55)';
+  x.font = '700 130px "Gowun Batang", serif';
+  x.fillText('\u201C', W/2, H*0.565);
+  // 구절 (길면 자동 축소)
+  const ref = c.verseRef || c.ref;
+  let fs = 92;
+  x.fillStyle = '#F3EBE1';
+  do { x.font = `700 ${fs}px "Gowun Batang", "Noto Serif KR", serif`; fs -= 4; }
+  while (x.measureText(ref).width > W*0.86 && fs > 40);
+  x.fillText(ref, W/2, H*0.65);
+  // 다이아몬드 룰
+  const ry = H*0.715;
+  g = x.createLinearGradient(W/2-70, 0, W/2+70, 0);
+  g.addColorStop(0,'rgba(212,175,55,0)'); g.addColorStop(.5,'#D4AF37'); g.addColorStop(1,'rgba(212,175,55,0)');
+  x.strokeStyle = g; x.lineWidth = 2;
+  x.beginPath(); x.moveTo(W/2-70, ry); x.lineTo(W/2+70, ry); x.stroke();
+  x.save(); x.translate(W/2, ry); x.rotate(Math.PI/4);
+  x.fillStyle = '#D4AF37'; x.fillRect(-6,-6,12,12); x.restore();
+  // 안내문
+  x.fillStyle = '#C9C1B4';
+  x.font = '300 34px "Noto Serif KR", serif';
+  x.fillText('오늘의 한 구절을 마음에 새겨 보세요', W/2, H*0.79);
+  // 하단 브랜드
+  x.fillStyle = '#857D73';
+  x.font = '400 26px "Noto Sans KR", sans-serif';
+  x.fillText('묵상의 여정  ·  아침 낮 저녁', W/2, H*0.925);
+
+  cv.toBlob(async blob=>{
+    if (!blob) { toast('카드 생성에 실패했습니다.'); return; }
+    const file = new File([blob], `말씀카드_${selectedDate}.png`, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: '오늘의 한 구절' }); return; } catch(e){ /* 취소 → 저장으로 */ }
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `말씀카드_${selectedDate}.png`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    toast('말씀 카드를 저장했습니다.');
+  }, 'image/png');
+}
+
+/* 길게 누르기 감지 (이동하면 취소) */
+(function bindLongPress(){
+  let timer = null, sx = 0, sy = 0;
+  function start(el, x, y){
+    sx = x; sy = y;
+    clearTimeout(timer);
+    timer = setTimeout(()=>{
+      timer = null;
+      if (navigator.vibrate) { try { navigator.vibrate(12); } catch(e){} }
+      openFocus(el.dataset.lp);
+    }, LP_MS);
+  }
+  function cancel(){ clearTimeout(timer); timer = null; }
+  function move(x, y){ if (timer && (Math.abs(x-sx) > 12 || Math.abs(y-sy) > 12)) cancel(); }
+  document.querySelectorAll('.lp').forEach(el=>{
+    el.addEventListener('contextmenu', e=>e.preventDefault());
+    if (window.PointerEvent) {
+      el.addEventListener('pointerdown', e=>start(el, e.clientX, e.clientY));
+      el.addEventListener('pointermove', e=>move(e.clientX, e.clientY));
+      el.addEventListener('pointerup', cancel);
+      el.addEventListener('pointercancel', cancel);
+      el.addEventListener('pointerleave', cancel);
+    } else {
+      el.addEventListener('touchstart', e=>start(el, e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+      el.addEventListener('touchmove', e=>move(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+      el.addEventListener('touchend', cancel);
+      el.addEventListener('mousedown', e=>start(el, e.clientX, e.clientY));
+      el.addEventListener('mousemove', e=>move(e.clientX, e.clientY));
+      el.addEventListener('mouseup', cancel);
+      el.addEventListener('mouseleave', cancel);
+    }
+  });
+})();
+
 /* ── 자정 감지: 오늘을 보고 있을 때만 자동 이동 ── */
 let lastToday = todayKey();
 setInterval(()=>{
@@ -1560,7 +2126,19 @@ setInterval(()=>{
 }, 60000);
 
 /* ── 초기화 ── */
-goDate(selectedDate, false);
+(async function boot(){
+  let k = todayKey();
+  const ok = await loadMonth(ymOf(k));
+  if (!ok) {
+    // 이번 달 데이터가 없으면: 내장 폴백 달 → 지난달 순으로 시도
+    if (DEFAULT_PLAN.length) { await loadMonth(ymOf(DEFAULT_PLAN[0].date)); k = DEFAULT_PLAN[0].date; }
+    else {
+      const prev = ymOf(shiftKey(k.slice(0,8)+'01', -1));
+      if (await loadMonth(prev)) k = months[prev][months[prev].length-1].date;
+    }
+  }
+  goDate(k, false);
+})();
 </script>
 </body>
 </html>
