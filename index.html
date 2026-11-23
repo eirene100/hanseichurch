@@ -648,7 +648,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
     </div>
     <a class="btn btn-primary" id="mBible" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      새한글성경 본문 보기</a>
+      새번역 본문 보기</a>
     <div class="srccap">ⓒ 대한성서공회</div>
     <div class="card lp" data-lp="guide" style="margin-top:24px"><div class="reading" id="mGuide"></div></div>
     <div class="listen">
@@ -676,7 +676,7 @@ body[data-font="3"] .memo textarea { font-size: 1.14rem; }
     <div class="kicker" id="dRef" style="color:var(--gold); font-family:var(--display); font-size:1.15rem; letter-spacing:0"></div>
     <a class="btn btn-primary" id="dBible" target="_blank" rel="noopener" style="margin-top:18px">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      새한글성경 본문 보기</a>
+      새번역 본문 보기</a>
     <div class="srccap">ⓒ 대한성서공회</div>
     <div class="card lp" data-lp="voice" style="margin-top:24px"><div class="reading deep" id="dVoice"></div></div>
     <div class="listen">
@@ -1284,8 +1284,26 @@ const DEFAULT_PLAN = [
   }
 ];
 const DOW = ['일','월','화','수','목','금','토'];
-const BIBLE_BASE = "https://bible.bskorea.or.kr/bible/NKT/";
-const BOOK_CODE = { "창세기":"GEN", "누가복음":"LUK" };
+const BIBLE_BASE = "https://bible.bskorea.or.kr/bible/RNKSV/";   /* 새번역 */
+/* 성경 66권 → 대한성서공회 책 코드 (USFM 표준) */
+const BOOK_CODE = {
+  "창세기":"GEN","출애굽기":"EXO","레위기":"LEV","민수기":"NUM","신명기":"DEU",
+  "여호수아":"JOS","사사기":"JDG","룻기":"RUT","사무엘상":"1SA","사무엘하":"2SA",
+  "열왕기상":"1KI","열왕기하":"2KI","역대상":"1CH","역대하":"2CH","에스라":"EZR",
+  "느헤미야":"NEH","에스더":"EST","욥기":"JOB","시편":"PSA","잠언":"PRO",
+  "전도서":"ECC","아가":"SNG","이사야":"ISA","예레미야애가":"LAM","예레미야":"JER",
+  "에스겔":"EZK","다니엘":"DAN","호세아":"HOS","요엘":"JOL","아모스":"AMO",
+  "오바댜":"OBA","요나":"JON","미가":"MIC","나훔":"NAM","하박국":"HAB",
+  "스바냐":"ZEP","학개":"HAG","스가랴":"ZEC","말라기":"MAL",
+  "마태복음":"MAT","마가복음":"MRK","누가복음":"LUK","요한복음":"JHN","사도행전":"ACT",
+  "로마서":"ROM","고린도전서":"1CO","고린도후서":"2CO","갈라디아서":"GAL","에베소서":"EPH",
+  "빌립보서":"PHP","골로새서":"COL","데살로니가전서":"1TH","데살로니가후서":"2TH",
+  "디모데전서":"1TI","디모데후서":"2TI","디도서":"TIT","빌레몬서":"PHM","히브리서":"HEB",
+  "야고보서":"JAS","베드로전서":"1PE","베드로후서":"2PE","요한일서":"1JN","요한이서":"2JN",
+  "요한삼서":"3JN","유다서":"JUD","요한계시록":"REV"
+};
+/* 긴 이름부터 비교해야 '예레미야애가'가 '예레미야'로 잘못 잡히지 않는다 */
+const BOOK_NAMES = Object.keys(BOOK_CODE).sort((a,b)=>b.length-a.length);
 const PERIODS = ['morning','midday','evening'];
 const PERIOD_KO = { morning:'아침', midday:'낮', evening:'저녁' };
 
@@ -1340,9 +1358,13 @@ function shiftKey(k, n){ const d=parseKey(k); d.setDate(d.getDate()+n); return f
 function isSunday(k){ return parseKey(k).getDay() === 0; }
 function isRestDay(k){ return isSunday(k) || !planByDate[k]; }  // 주일 또는 데이터 없는 날
 function chapterUrl(ref){
-  const book = Object.keys(BOOK_CODE).find(b => (ref||'').includes(b)) || "누가복음";
-  const m = (ref||'').match(/(\d+)\s*:/);
-  return m ? BIBLE_BASE + BOOK_CODE[book] + "." + m[1] : BIBLE_BASE;
+  const r = (ref||'').trim();
+  const book = BOOK_NAMES.find(b => r.startsWith(b)) || BOOK_NAMES.find(b => r.includes(b));
+  if (!book) return BIBLE_BASE;                    // 책 이름을 못 찾으면 성경 첫 화면
+  const rest = r.slice(r.indexOf(book) + book.length);
+  const m = rest.match(/(\d+)\s*:/) || rest.match(/(\d+)/);   // '13:1-20' → 13, 한 장짜리 책 '1-25' → 1
+  const ch = m ? m[1] : '1';
+  return BIBLE_BASE + BOOK_CODE[book] + "." + ch;
 }
 function searchUrl(type, title){ return "https://www.youtube.com/results?search_query=" + encodeURIComponent(type + " " + title); }
 /* 곡 링크: 데이터에 지정 URL이 있으면 그 곡으로 바로, 없으면 유튜브 검색으로 */
@@ -1939,7 +1961,7 @@ function openFocus(kind){
       <div class="rule"></div>
       <a class="btn btn-primary focus-verse-btn" href="${chapterUrl(c.ref)}" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        새한글성경 본문 보기</a>
+        새번역 본문 보기</a>
       <div class="focus-nav">
         <button class="fnav" id="fPrev" aria-label="이전 날 구절">‹</button>
         <button class="fshare" id="fShare">
