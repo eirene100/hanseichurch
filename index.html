@@ -1357,6 +1357,19 @@ function todayKey(){ return fmtKey(new Date()); }
 function shiftKey(k, n){ const d=parseKey(k); d.setDate(d.getDate()+n); return fmtKey(d); }
 function isSunday(k){ return parseKey(k).getDay() === 0; }
 function isRestDay(k){ return isSunday(k) || !planByDate[k]; }  // 주일 또는 데이터 없는 날
+/* 본문 범위에서 성경 이름만 뽑기 ('요한복음 13:1-20' → '요한복음') */
+function bookOf(ref){
+  const r = (ref||'').trim();
+  return BOOK_NAMES.find(b => r.startsWith(b)) || (r.match(/^[가-힣]+/)||[''])[0];
+}
+/* 보고 있는 날짜의 성경. 주일처럼 본문이 없는 날은 그 앞의 가장 가까운 날을 따른다 */
+function bookForDate(k){
+  if (planByDate[k]) return bookOf(planByDate[k].ref);
+  const prev = Object.keys(planByDate).filter(d => d < k).sort().pop();
+  if (prev) return bookOf(planByDate[prev].ref);
+  const next = Object.keys(planByDate).filter(d => d > k).sort()[0];
+  return next ? bookOf(planByDate[next].ref) : '';
+}
 function chapterUrl(ref){
   const r = (ref||'').trim();
   const book = BOOK_NAMES.find(b => r.startsWith(b)) || BOOK_NAMES.find(b => r.includes(b));
@@ -1425,7 +1438,7 @@ function renderDateNav(){
   document.getElementById('dnDots').style.visibility = isRestDay(selectedDate) ? 'hidden' : 'visible';
   // 브랜드 부제: 보고 있는 달 기준
   const entries = months[ymOf(selectedDate)] || [];
-  const book = entries.length ? (entries[0].ref.match(/^[가-힣]+/)||['묵상'])[0] : '';
+  const book = bookForDate(selectedDate);
   document.getElementById('brandSub').textContent =
     `${d.getFullYear()}년 ${d.getMonth()+1}월${book ? ' · ' + book : ''}`;
 }
@@ -1669,7 +1682,7 @@ function buildJourney(){
   const year = dv.getFullYear(), month = dv.getMonth();
 
   /* 부제: 보고 있는 달 */
-  const book = entries.length ? (entries[0].ref.match(/^[가-힣]+/)||['묵상'])[0] : '묵상';
+  const book = bookForDate(selectedDate) || '묵상';
   document.getElementById('sheetSub').textContent = `${book} · ${year}년 ${month+1}월`;
 
   /* 통계 (이 달) */
